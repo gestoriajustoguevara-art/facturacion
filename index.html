@@ -816,6 +816,8 @@ main {
           <div class="field">
             <label>NIF / NIE / CIF</label>
             <input type="text" id="f-dni" placeholder="12345678A" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+            <button type="button" onclick="rellenarDesdeMaestroFAC()" style="margin-top:4px;padding:4px 10px;border:1.5px solid var(--navy);border-radius:7px;cursor:pointer;font-size:11px;background:white;font-family:inherit">🔍 Buscar en ClientesMAESTRO</button>
+            <span id="mst-fac" style="font-size:11px;margin-left:6px;color:var(--gold)"></span>
           </div>
           <div class="field">
             <label>Teléfono</label>
@@ -2545,6 +2547,40 @@ function toast(msg, error = false) {
   t.style.display = 'flex';
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.style.display = 'none', 3000);
+}
+
+// ═══ CLIENTESMAESTRO ══════════════════════════════════════════════════════
+const URL_MAESTRO = 'https://script.google.com/macros/s/AKfycbyVXypuTXm5tRvbP-xJu06q7ZsJ2qve790lCyvBLJpr6jTckZhc6wZ4kX5XPhVOWCVrww/exec';
+
+function guardarEnMaestro(datos) {
+  if (!datos.DNI_NIE || !datos.Nombre) return;
+  fetch(URL_MAESTRO, { method:'POST', mode:'no-cors', body: JSON.stringify({ action:'upsert', datos }) });
+}
+
+async function buscarEnMaestro(dni) {
+  if (!dni || dni.length < 7) return null;
+  try {
+    const r = await fetch(URL_MAESTRO + '?action=buscar&dni=' + encodeURIComponent(dni.toUpperCase().replace(/-/g,'')));
+    const d = await r.json();
+    if (d && d.encontrado) return d.cliente;
+  } catch(e) {}
+  return null;
+}
+
+async function rellenarDesdeMaestroFAC() {
+  const dni = (document.getElementById('f-dni')?.value||'').trim();
+  const st  = document.getElementById('mst-fac');
+  if (!dni || dni.length < 7) { if(st) st.textContent='⚠ Escribe el NIF/NIE primero'; return; }
+  if(st) st.textContent='🔍 Buscando...';
+  const cli = await buscarEnMaestro(dni);
+  if (!cli) { if(st) st.textContent='❌ No encontrado en Maestro'; return; }
+  const set = (id, val) => { const el=document.getElementById(id); if(el&&!el.value&&val) el.value=val; };
+  const nombre = [cli.Nombre, cli.Apellido1, cli.Apellido2].filter(Boolean).join(' ');
+  set('f-cliente', cli.Razon_Social || nombre);
+  set('f-tel',     cli.Telefono1 || '');
+  const dir = [cli.Tipo_Via, cli.Nombre_Via, cli.Numero, cli.CP, cli.Municipio, cli.Provincia].filter(Boolean).join(' ');
+  set('f-dir-cli', dir);
+  if(st) st.textContent='✅ Datos cargados desde Maestro';
 }
 </script>
 </body>
