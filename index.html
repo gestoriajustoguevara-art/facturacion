@@ -2574,11 +2574,13 @@ async function rellenarDesdeMaestroFAC() {
   if(st) st.textContent='🔍 Buscando...';
   const cli = await buscarEnMaestro(dni);
   if (!cli) { if(st) st.textContent='❌ No encontrado en Maestro'; return; }
-  const set = (id, val) => { const el=document.getElementById(id); if(el&&!el.value&&val) el.value=val; };
-  const nombre = [cli.Nombre, cli.Apellido1, cli.Apellido2].filter(Boolean).join(' ');
-  set('f-cliente', cli.Razon_Social || nombre);
+  const set = (id, val) => { const el=document.getElementById(id); if(el && val) el.value=val; };
+  const nombre = cli.Razon_Social || [cli.Nombre, cli.Apellido1, cli.Apellido2].filter(Boolean).join(' ');
+  set('f-cliente', nombre);
   set('f-tel',     cli.Telefono1 || '');
-  const dir = [cli.Tipo_Via, cli.Nombre_Via, cli.Numero, cli.CP, cli.Municipio, cli.Provincia].filter(Boolean).join(' ');
+  // Dirección limpia (sin "None")
+  const dir = [cli.Tipo_Via, cli.Nombre_Via, cli.Numero, cli.CP, cli.Municipio, cli.Provincia]
+    .filter(v => v && String(v) !== 'None' && String(v).trim() !== '').join(' ');
   set('f-dir-cli', dir);
   if(st) st.textContent='✅ Datos cargados desde Maestro';
 }
