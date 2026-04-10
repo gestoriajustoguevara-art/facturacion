@@ -30,7 +30,6 @@ body {
   min-height: 100vh;
 }
 
-/* HEADER */
 header {
   background: var(--navy);
   color: white;
@@ -73,7 +72,6 @@ header span { color: var(--gold2); }
   gap: 0.75rem;
 }
 
-/* MAIN LAYOUT */
 main {
   max-width: 1280px;
   margin: 0 auto;
@@ -84,7 +82,6 @@ main {
   align-items: start;
 }
 
-/* PANELS */
 .panel {
   background: white;
   border-radius: 12px;
@@ -116,7 +113,6 @@ main {
 
 .panel-body { padding: 1rem; }
 
-/* TABS */
 .tabs {
   display: flex;
   background: var(--gray);
@@ -143,7 +139,6 @@ main {
   color: white;
 }
 
-/* EXPEDIENTE CARD */
 .exp-list { display: flex; flex-direction: column; gap: 0.5rem; max-height: 380px; overflow-y: auto; }
 
 .exp-card {
@@ -190,10 +185,7 @@ main {
 .tipo-TR { background: #f3e8ff; color: #6b21a8; }
 .tipo-NA { background: #fff7ed; color: #9a3412; }
 
-/* FORMULARIO FACTURA */
-.form-section {
-  margin-bottom: 1.25rem;
-}
+.form-section { margin-bottom: 1.25rem; }
 .section-label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -233,7 +225,6 @@ main {
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
 .field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
 
-/* LÍNEAS */
 .lineas-table { width: 100%; border-collapse: collapse; margin-bottom: 0.5rem; }
 .lineas-table th {
   font-size: 0.68rem;
@@ -245,10 +236,7 @@ main {
   padding: 0.3rem 0.4rem;
   border-bottom: 1px solid var(--gray);
 }
-.lineas-table td {
-  padding: 0.3rem 0.3rem;
-  vertical-align: middle;
-}
+.lineas-table td { padding: 0.3rem 0.3rem; vertical-align: middle; }
 .lineas-table input, .lineas-table select {
   width: 100%;
   border: 1.5px solid var(--gray);
@@ -281,7 +269,6 @@ main {
 }
 .btn-del:hover { opacity: 1; }
 
-/* TOTALES */
 .totales {
   background: var(--navy);
   color: white;
@@ -304,11 +291,8 @@ main {
   margin-top: 0.4rem;
   padding-top: 0.6rem;
 }
-.total-row span:last-child {
-  font-family: 'DM Mono', monospace;
-}
+.total-row span:last-child { font-family: 'DM Mono', monospace; }
 
-/* BOTONES */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -322,47 +306,18 @@ main {
   cursor: pointer;
   transition: all .15s;
 }
-.btn-primary {
-  background: var(--navy);
-  color: white;
-}
+.btn-primary { background: var(--navy); color: white; }
 .btn-primary:hover { background: var(--navy2); }
-
-.btn-gold {
-  background: var(--gold);
-  color: var(--navy);
-  font-weight: 600;
-}
+.btn-gold { background: var(--gold); color: var(--navy); font-weight: 600; }
 .btn-gold:hover { background: var(--gold2); }
-
-.btn-outline {
-  background: white;
-  color: var(--navy);
-  border: 1.5px solid var(--navy);
-}
+.btn-outline { background: white; color: var(--navy); border: 1.5px solid var(--navy); }
 .btn-outline:hover { background: var(--navy); color: white; }
-
-.btn-sm {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.75rem;
-}
+.btn-sm { padding: 0.35rem 0.75rem; font-size: 0.75rem; }
 .btn-green { background: var(--green); color: white; }
 .btn-green:hover { background: #155d38; }
+.btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
 
-.btn-row {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-}
-
-/* CONCEPTOS RÁPIDOS */
-.conceptos-rapidos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 0.75rem;
-}
+.conceptos-rapidos { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
 .chip {
   background: var(--gray);
   border: none;
@@ -375,7 +330,6 @@ main {
 }
 .chip:hover { background: var(--gold2); }
 
-/* LISTA FACTURAS */
 .fact-list { display: flex; flex-direction: column; gap: 0.4rem; max-height: 500px; overflow-y: auto; }
 .fact-row {
   display: flex;
@@ -410,19 +364,13 @@ main {
   padding: 2px 8px;
   border-radius: 20px;
 }
-.estado-emitida { background: #dcfce7; color: #166534; }
+.estado-emitida   { background: #dcfce7; color: #166534; }
 .estado-pendiente { background: #fef9c3; color: #854d0e; }
-.estado-anulada { background: #fee2e2; color: #991b1b; }
-.estado-proforma { background: #fef9c3; color: #854d0e; font-style: italic; }
-.estado-pagada   { background: #dcfce7; color: #166534; }
+.estado-anulada   { background: #fee2e2; color: #991b1b; }
+.estado-proforma  { background: #fef9c3; color: #854d0e; font-style: italic; }
+.estado-pagada    { background: #dcfce7; color: #166534; }
 
-/* PREVIEW FACTURA */
-.preview-wrap {
-  background: #e8e5df;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-top: 1rem;
-}
+.preview-wrap { background: #e8e5df; padding: 1rem; border-radius: 8px; margin-top: 1rem; }
 .factura-paper {
   background: white;
   padding: 2.5rem 2.8rem;
@@ -446,9 +394,7 @@ main {
   letter-spacing: 2px;
 }
 .fact-emisor p { font-size: 0.75rem; color: #555; line-height: 1.6; margin-top: 0.25rem; }
-.fact-num-box {
-  text-align: right;
-}
+.fact-num-box { text-align: right; }
 .fact-num-box .fact-serie {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2rem;
@@ -487,18 +433,10 @@ main {
   padding: 0.3rem 0.5rem;
   text-align: left;
 }
-.fact-lineas td {
-  padding: 0.5rem;
-  border-bottom: 1px solid var(--gray);
-  font-size: 0.79rem;
-}
+.fact-lineas td { padding: 0.5rem; border-bottom: 1px solid var(--gray); font-size: 0.79rem; }
 .fact-lineas .td-num { text-align: right; font-family: 'DM Mono', monospace; }
 
-.fact-totales-box {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-}
+.fact-totales-box { display: flex; justify-content: flex-end; margin-top: 1rem; }
 .fact-totales-inner { width: 240px; }
 .fact-tot-row {
   display: flex;
@@ -540,7 +478,6 @@ main {
   margin-bottom: 0.5rem;
 }
 
-/* MODAL */
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(15,31,61,0.6);
@@ -567,7 +504,6 @@ main {
 }
 .modal-btns { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; }
 
-/* TOAST */
 .toast {
   position: fixed;
   bottom: 1.5rem; right: 1.5rem;
@@ -588,33 +524,20 @@ main {
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* EMPTY */
-.empty {
-  text-align: center;
-  padding: 2rem 1rem;
-  color: var(--gray2);
-  font-size: 0.82rem;
-}
+.empty { text-align: center; padding: 2rem 1rem; color: var(--gray2); font-size: 0.82rem; }
 .empty .icon { font-size: 2rem; margin-bottom: 0.5rem; }
 
-/* SCROLL */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--gray); border-radius: 10px; }
 
-/* PRINT */
 @media print {
   body > *:not(#print-area) { display: none !important; }
   #print-area { display: block !important; }
   .factura-paper { box-shadow: none; }
 }
 
-/* NAV PILLS */
-.nav-pills {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0;
-}
+.nav-pills { display: flex; gap: 0.5rem; margin-bottom: 0; }
 .nav-pill {
   padding: 0.35rem 0.9rem;
   border-radius: 20px;
@@ -626,20 +549,10 @@ main {
   font-family: 'DM Sans', sans-serif;
   transition: all .15s;
 }
-.nav-pill.active {
-  background: var(--gold);
-  color: var(--navy);
-  border-color: var(--gold);
-  font-weight: 600;
-}
+.nav-pill.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 600; }
 .nav-pill:hover:not(.active) { border-color: rgba(255,255,255,0.7); color: white; }
 
-/* SELECCIÓN MÚLTIPLE */
-.exp-card.selected-multi {
-  border-color: var(--gold);
-  background: #fffbea;
-  position: relative;
-}
+.exp-card.selected-multi { border-color: var(--gold); background: #fffbea; position: relative; }
 .exp-card .check-multi {
   width: 18px; height: 18px;
   border: 2px solid var(--gray2);
@@ -649,11 +562,7 @@ main {
   flex-shrink: 0;
   transition: all .15s;
 }
-.exp-card.selected-multi .check-multi {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--navy);
-}
+.exp-card.selected-multi .check-multi { background: var(--gold); border-color: var(--gold); color: var(--navy); }
 .multi-bar {
   background: var(--navy);
   color: white;
@@ -666,27 +575,19 @@ main {
   font-size: 0.8rem;
 }
 .multi-bar.visible { display: flex; }
-.bloque-exp {
-  border: 1.5px solid var(--gray);
-  border-radius: 8px;
-  margin-bottom: 0.75rem;
-  overflow: hidden;
-}
-.bloque-exp-head {
-  background: var(--navy);
-  color: white;
-  padding: 0.45rem 0.75rem;
-  font-size: 0.75rem;
-  font-family: 'DM Mono', monospace;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.bloque-exp-body { padding: 0 0 0.25rem 0; }
 
-/* VIEWS */
-.view { display: none; }
-.view.active { display: contents; }
+/* Banner config central */
+.cfg-banner {
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  color: #166534;
+  margin-bottom: 10px;
+  display: none;
+}
+.cfg-banner.visible { display: block; }
 </style>
 </head>
 <body>
@@ -706,7 +607,6 @@ main {
 
 <main id="view-nueva">
 
-  <!-- PANEL IZQUIERDO: expedientes -->
   <div>
     <div class="panel" style="margin-bottom:1rem">
       <div class="panel-head">
@@ -727,7 +627,7 @@ main {
           <button id="btn-todos" class="btn btn-outline btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado(false)">📋 Todos</button>
         </div>
         <div class="field" style="margin-bottom:0.5rem">
-          <input type="text" placeholder="🔍 Buscar cliente para selección múltiple…" id="buscador" oninput="filtrarBuscar()">
+          <input type="text" placeholder="🔍 Buscar cliente…" id="buscador" oninput="filtrarBuscar()">
         </div>
         <div class="multi-bar" id="multi-bar">
           <span id="multi-count">0 expedientes</span>
@@ -735,7 +635,7 @@ main {
           <button class="btn btn-outline btn-sm" style="border-color:rgba(255,255,255,0.4);color:white" onclick="limpiarSeleccionMulti()">✕ Limpiar</button>
         </div>
         <div class="exp-list" id="exp-list">
-          <div class="empty"><div class="icon">📂</div>Introduce la URL de tu Apps Script<br>en Configuración para cargar expedientes</div>
+          <div class="empty"><div class="icon">⏳</div>Cargando URLs desde config central…</div>
         </div>
       </div>
     </div>
@@ -744,6 +644,10 @@ main {
     <div class="panel">
       <div class="panel-head">⚙️ CONFIGURACIÓN</div>
       <div class="panel-body">
+        <!-- Banner config central -->
+        <div class="cfg-banner" id="cfg-banner">
+          ✅ URLs cargadas automáticamente desde config central
+        </div>
         <div class="field">
           <label>URL Apps Script — Escrituras</label>
           <input type="text" id="cfg-url-esc" placeholder="https://script.google.com/…/exec">
@@ -786,7 +690,6 @@ main {
     </div>
     <div class="panel-body">
 
-      <!-- DATOS GENERALES -->
       <div class="form-section">
         <div class="section-label">Datos generales</div>
         <div class="field-row">
@@ -805,7 +708,6 @@ main {
         </div>
       </div>
 
-      <!-- CLIENTE -->
       <div class="form-section">
         <div class="section-label">Cliente (destinatario)</div>
         <div class="field">
@@ -830,10 +732,8 @@ main {
         </div>
       </div>
 
-      <!-- CONCEPTOS -->
       <div class="form-section">
         <div class="section-label">Líneas de factura</div>
-
         <div class="conceptos-rapidos" id="chips-rapidos">
           <button class="chip" onclick="addLinea('Honorarios por tramitación y gestión','',1,'')">+ Honorarios</button>
           <button class="chip" onclick="addLinea('Suplidos (tasas administrativas)','',1,'')">+ Suplidos</button>
@@ -846,7 +746,6 @@ main {
           <button class="chip" onclick="addLinea('Inscripción en Registro de la Propiedad','',1,'')">+ Registro</button>
           <button class="chip" onclick="addLinea('','',1,'')">+ Línea libre</button>
         </div>
-
         <table class="lineas-table" id="tabla-lineas">
           <thead>
             <tr>
@@ -858,14 +757,11 @@ main {
               <th class="col-del"></th>
             </tr>
           </thead>
-          <tbody id="lineas-body">
-          </tbody>
+          <tbody id="lineas-body"></tbody>
         </table>
-
         <button class="btn btn-outline btn-sm" onclick="addLinea('','',1,'21')">+ Añadir línea</button>
       </div>
 
-      <!-- FORMA DE PAGO -->
       <div class="form-section">
         <div class="section-label">Pago y observaciones</div>
         <div class="field-row">
@@ -889,7 +785,6 @@ main {
         </div>
       </div>
 
-      <!-- TOTALES -->
       <div class="totales" id="totales-box">
         <div class="total-row"><span>Base imponible</span><span id="t-base">0,00 €</span></div>
         <div class="total-row"><span>IVA (21%)</span><span id="t-iva">0,00 €</span></div>
@@ -945,20 +840,13 @@ main {
       <div style="max-width:700px; margin: 0 auto">
         <div style="background:#fef9c3; border:1.5px solid #f59e0b; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.5rem; font-size:0.83rem; line-height:1.7">
           <strong>⏱️ Estado de obligación:</strong> Los autónomos como Francisco José Justo Guevara tienen plazo hasta <strong>julio de 2027</strong>.<br>
-          Este módulo genera el XML y CSV con el formato que exige la AEAT, listo para importar en cualquier software homologado VeriFactu (Anfix, Holded, Billin…).
+          Este módulo genera el XML y CSV con el formato que exige la AEAT, listo para importar en cualquier software homologado VeriFactu.
         </div>
-
         <div class="form-section">
           <div class="section-label">Seleccionar facturas a exportar</div>
           <div class="field-row">
-            <div class="field">
-              <label>Desde fecha</label>
-              <input type="date" id="vf-desde">
-            </div>
-            <div class="field">
-              <label>Hasta fecha</label>
-              <input type="date" id="vf-hasta">
-            </div>
+            <div class="field"><label>Desde fecha</label><input type="date" id="vf-desde"></div>
+            <div class="field"><label>Hasta fecha</label><input type="date" id="vf-hasta"></div>
           </div>
           <div class="field">
             <label>Serie</label>
@@ -969,23 +857,9 @@ main {
             </select>
           </div>
         </div>
-
         <div class="btn-row">
           <button class="btn btn-primary" onclick="exportarVerifactuCSV()">📥 Exportar CSV para VeriFactu</button>
           <button class="btn btn-gold" onclick="exportarVerifactuXML()">📄 Exportar XML (AEAT)</button>
-        </div>
-
-        <div style="margin-top:1.5rem; background:var(--gray); border-radius:8px; padding:1rem; font-size:0.78rem; color:#555; line-height:1.8">
-          <strong>Campos incluidos en la exportación:</strong><br>
-          Serie · Número · Fecha expedición · NIF emisor · Razón social emisor · NIF destinatario · Razón social destinatario · Descripción operación · Base imponible · Tipo IVA · Cuota IVA · Total factura · Forma pago · Expediente vinculado
-        </div>
-
-        <div style="margin-top:1rem; background:#dcfce7; border-radius:8px; padding:1rem; font-size:0.78rem; line-height:1.8">
-          <strong>Próximos pasos cuando llegue julio 2027:</strong><br>
-          1. Elegir software homologado (recomendado: <strong>Anfix ~12€/mes</strong> o <strong>Billin ~9€/mes</strong>)<br>
-          2. Importar este CSV/XML en el programa<br>
-          3. El programa genera el hash, firma digital y lo envía a la AEAT automáticamente<br>
-          4. Cada factura llevará código QR verificable por el cliente
         </div>
       </div>
     </div>
@@ -995,35 +869,23 @@ main {
 <!-- VISTA DASHBOARD -->
 <main id="view-dashboard" style="display:none; grid-template-columns:1fr">
   <div style="grid-column:1/-1">
-
-    <!-- KPIs -->
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem" id="kpi-grid"></div>
-
-    <!-- Gráfico meses + tabla tipo -->
     <div style="display:grid;grid-template-columns:1fr 340px;gap:1.5rem;align-items:start">
-
       <div class="panel">
         <div class="panel-head">📅 FACTURADO POR MES · <span id="dash-anio" style="color:var(--gold2)">2026</span></div>
-        <div class="panel-body">
-          <canvas id="chart-meses" height="220"></canvas>
-        </div>
+        <div class="panel-body"><canvas id="chart-meses" height="220"></canvas></div>
       </div>
-
       <div class="panel">
         <div class="panel-head">🗂️ POR TIPO DE GESTIÓN</div>
         <div class="panel-body" id="tabla-tipo"></div>
       </div>
-
     </div>
-
-    <!-- Detalle mes seleccionado -->
     <div class="panel" style="margin-top:1.5rem">
       <div class="panel-head">🧾 FACTURAS DEL MES SELECCIONADO <span id="dash-mes-label" style="color:var(--gold2)"></span></div>
       <div class="panel-body">
         <div class="fact-list" id="dash-fact-list" style="max-height:320px"></div>
       </div>
     </div>
-
   </div>
 </main>
 
@@ -1041,10 +903,62 @@ main {
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast" style="display:none"></div>
 
 <script>
+// ══════════════════════════════════════════════════════════════
+// CONFIG CENTRAL — todas las URLs cargadas desde GitHub
+// Para cambiarlas: edita config.json en el repo "consola"
+// ══════════════════════════════════════════════════════════════
+const CONFIG_URL = 'https://gestoriajustoguevara-art.github.io/consola/config.json';
+let URL_MAESTRO = '';
+
+async function cargarConfigCentral() {
+  try {
+    const res = await fetch(CONFIG_URL);
+    const cfg = await res.json();
+
+    // ClientesMAESTRO
+    URL_MAESTRO = cfg.clientesMaestro.scriptUrl;
+
+    // URLs de las apps — rellenar los inputs de configuración
+    const mapa = {
+      'cfg-url-esc': cfg.escrituras.scriptUrl,
+      'cfg-url-fis': cfg.fiscal.scriptUrl,
+      'cfg-url-ext': cfg.extranjeria.scriptUrl,
+      'cfg-url-tra': cfg.trafico.scriptUrl,
+      'cfg-url-ju':  cfg.juridico.scriptUrl
+    };
+    let alguna = false;
+    Object.entries(mapa).forEach(([id, url]) => {
+      if (url) {
+        // Solo rellenar si el campo está vacío (no machacar lo que el usuario haya puesto)
+        const el = document.getElementById(id);
+        if (el && !el.value) { el.value = url; alguna = true; }
+        else if (el && !el.value) el.value = url;
+      }
+    });
+
+    // Guardar en localStorage igual que si el usuario lo hubiera escrito
+    if (cfg.escrituras.scriptUrl)  localStorage.setItem('gjg_cfg_url_esc', cfg.escrituras.scriptUrl);
+    if (cfg.fiscal.scriptUrl)      localStorage.setItem('gjg_cfg_url_fis', cfg.fiscal.scriptUrl);
+    if (cfg.extranjeria.scriptUrl) localStorage.setItem('gjg_cfg_url_ext', cfg.extranjeria.scriptUrl);
+    if (cfg.trafico.scriptUrl)     localStorage.setItem('gjg_cfg_url_tra', cfg.trafico.scriptUrl);
+    if (cfg.juridico.scriptUrl)    localStorage.setItem('gjg_cfg_url_ju',  cfg.juridico.scriptUrl);
+
+    // Mostrar banner de confirmación
+    const banner = document.getElementById('cfg-banner');
+    if (banner) banner.classList.add('visible');
+
+    console.log('✅ Config central cargada — Facturación lista');
+    return true;
+  } catch(e) {
+    console.error('❌ Error cargando config central:', e);
+    return false;
+  }
+}
+// ══════════════════════════════════════════════════════════════
+
 // =============================================
 // DATOS
 // =============================================
@@ -1078,58 +992,50 @@ function getEmisor(f) {
 // =============================================
 // INIT
 // =============================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // 1. Cargar config central (URLs automáticas)
+  await cargarConfigCentral();
+
+  // 2. Cargar config local (dirección, contacto, etc.)
   cargarConfig();
+
+  // 3. Inicializar formulario
   document.getElementById('f-fecha').value = hoy();
   addLinea('Honorarios por tramitación y gestión', '', 1, '21');
   actualizarTotales();
   actualizarSerie();
   renderFacturas();
+
+  // 4. Cargar expedientes automáticamente
   const hayUrls = localStorage.getItem('gjg_cfg_url_esc') || localStorage.getItem('gjg_cfg_url_fis') ||
                   localStorage.getItem('gjg_cfg_url_ext') || localStorage.getItem('gjg_cfg_url_tra') ||
                   localStorage.getItem('gjg_cfg_url_ju');
   if (hayUrls) cargarExpedientes();
+  else {
+    document.getElementById('exp-list').innerHTML =
+      '<div class="empty"><div class="icon">📂</div>Introduce la URL de tu Apps Script<br>en Configuración para cargar expedientes</div>';
+  }
 });
 
 function hoy() {
   const d = new Date();
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
-
-function fmt(n) {
-  return Number(n||0).toLocaleString('es-ES', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
-}
-
-function round2(n) {
-  const x = Number(n)||0;
-  return Math.round((x + Number.EPSILON)*100)/100;
-}
+function fmt(n) { return Number(n||0).toLocaleString('es-ES', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €'; }
+function round2(n) { const x = Number(n)||0; return Math.round((x + Number.EPSILON)*100)/100; }
 
 // =============================================
 // VISTAS
 // =============================================
 function setView(v) {
-  document.getElementById('view-nueva').style.display = 'none';
-  document.getElementById('view-listado').style.display = 'none';
-  document.getElementById('view-dashboard').style.display = 'none';
-  document.getElementById('view-verifactu').style.display = 'none';
+  ['view-nueva','view-listado','view-dashboard','view-verifactu'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
   document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
-
-  if (v === 'nueva') {
-    document.getElementById('view-nueva').style.display = 'grid';
-    document.querySelectorAll('.nav-pill')[0].classList.add('active');
-  } else if (v === 'listado') {
-    document.getElementById('view-listado').style.display = 'grid';
-    document.querySelectorAll('.nav-pill')[1].classList.add('active');
-    renderFacturas();
-  } else if (v === 'dashboard') {
-    document.getElementById('view-dashboard').style.display = 'grid';
-    document.querySelectorAll('.nav-pill')[2].classList.add('active');
-    renderDashboard();
-  } else {
-    document.getElementById('view-verifactu').style.display = 'grid';
-    document.querySelectorAll('.nav-pill')[3].classList.add('active');
-  }
+  if (v==='nueva')     { document.getElementById('view-nueva').style.display='grid';     document.querySelectorAll('.nav-pill')[0].classList.add('active'); }
+  else if (v==='listado')   { document.getElementById('view-listado').style.display='grid';   document.querySelectorAll('.nav-pill')[1].classList.add('active'); renderFacturas(); }
+  else if (v==='dashboard') { document.getElementById('view-dashboard').style.display='grid'; document.querySelectorAll('.nav-pill')[2].classList.add('active'); renderDashboard(); }
+  else                      { document.getElementById('view-verifactu').style.display='grid'; document.querySelectorAll('.nav-pill')[3].classList.add('active'); }
 }
 
 // =============================================
@@ -1147,17 +1053,25 @@ function guardarConfig() {
 }
 
 function cargarConfig() {
-  document.getElementById('cfg-url-esc').value = localStorage.getItem('gjg_cfg_url_esc') || '';
-  document.getElementById('cfg-url-fis').value = localStorage.getItem('gjg_cfg_url_fis') || '';
-  document.getElementById('cfg-url-ext').value = localStorage.getItem('cfg-url-ext') || localStorage.getItem('gjg_cfg_url_ext') || '';
-  document.getElementById('cfg-url-tra').value = localStorage.getItem('gjg_cfg_url_tra') || '';
-  document.getElementById('cfg-url-ju').value  = localStorage.getItem('gjg_cfg_url_ju')  || '';
+  // URLs: respetar lo que ya hay en el input (puesto por cargarConfigCentral)
+  // solo rellenar si el campo sigue vacío
+  const campos = [
+    ['cfg-url-esc','gjg_cfg_url_esc'],
+    ['cfg-url-fis','gjg_cfg_url_fis'],
+    ['cfg-url-ext','gjg_cfg_url_ext'],
+    ['cfg-url-tra','gjg_cfg_url_tra'],
+    ['cfg-url-ju', 'gjg_cfg_url_ju'],
+  ];
+  campos.forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el && !el.value) el.value = localStorage.getItem(key) || '';
+  });
   document.getElementById('cfg-dir').value = localStorage.getItem('gjg_cfg_dir') || 'Almería';
   document.getElementById('cfg-contacto').value = localStorage.getItem('gjg_cfg_contacto') || 'gestoriajustoguevara@gmail.com';
 }
 
 // =============================================
-// EXPEDIENTES — CORREGIDO: cada área es independiente
+// EXPEDIENTES
 // =============================================
 async function cargarExpedientes() {
   const urlEsc = document.getElementById('cfg-url-esc').value.trim();
@@ -1166,10 +1080,8 @@ async function cargarExpedientes() {
   const urlTra = document.getElementById('cfg-url-tra').value.trim();
   const urlJu  = document.getElementById('cfg-url-ju').value.trim();
   expedientes = [];
-
   toast('🔄 Cargando expedientes…');
 
-  // ── ESCRITURAS ──────────────────────────────────────────────
   if (urlEsc) {
     try {
       const r = await fetch(urlEsc + '?action=leer&hoja=CLIENTES');
@@ -1177,25 +1089,15 @@ async function cargarExpedientes() {
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
-          const obj = {};
-          cab.forEach((c, i) => obj[c] = row[i] !== undefined ? row[i] : '');
-          const num = String(obj.numExp || '').trim();
-          if (!num || num === '0') return;
-          const tipo = num.startsWith('GE') ? 'GE' :
-                       num.startsWith('AS') ? 'AS' :
-                       num.startsWith('EX') ? 'EX' : 'GE';
-          expedientes.push({
-            num, cliente: obj.cliente || obj.nombre || '',
-            dni: obj.dni || '', gestion: obj.gestion || '',
-            tipo, totalExp: obj.totalExp || '',
-            fuente: 'escrituras', raw: obj
-          });
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
+          const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
+          const tipo = num.startsWith('GE')?'GE':num.startsWith('AS')?'AS':num.startsWith('EX')?'EX':'GE';
+          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.gestion||'', tipo, totalExp:obj.totalExp||'', fuente:'escrituras', raw:obj });
         });
       }
     } catch(e) { console.warn('Error cargando Escrituras', e); }
   }
 
-  // ── FISCAL ──────────────────────────────────────────────────
   if (urlFis) {
     try {
       const r = await fetch(urlFis + '?action=leer&hoja=FiscalExp');
@@ -1203,27 +1105,15 @@ async function cargarExpedientes() {
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
-          const obj = {};
-          cab.forEach((c, i) => obj[c] = row[i] !== undefined ? row[i] : '');
-          const numF = String(obj.numExp || '').trim();
-          if (!numF || numF === '0') return;
-          if (expedientes.find(e => e.num === numF)) return;
-          expedientes.push({
-            num: numF,
-            cliente: obj.cliente || obj.nombre || '',
-            dni: obj.nie || obj.dni || '',
-            gestion: obj.gestion || '',
-            tipo: 'AS',
-            totalExp: obj.importeTotal || obj.honorarios || '',
-            fuente: 'fiscal',
-            raw: obj
-          });
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
+          const numF = String(obj.numExp||'').trim(); if (!numF||numF==='0') return;
+          if (expedientes.find(e => e.num===numF)) return;
+          expedientes.push({ num:numF, cliente:obj.cliente||obj.nombre||'', dni:obj.nie||obj.dni||'', gestion:obj.gestion||'', tipo:'AS', totalExp:obj.importeTotal||obj.honorarios||'', fuente:'fiscal', raw:obj });
         });
       }
-    } catch(e) { console.warn('Error cargando FiscalExp', e); }
+    } catch(e) { console.warn('Error cargando Fiscal', e); }
   }
 
-  // ── EXTRANJERÍA ──────────────────────────────────────────────
   if (urlExt) {
     try {
       const r = await fetch(urlExt + '?action=leer&hoja=ExtranjeriaExp');
@@ -1231,32 +1121,18 @@ async function cargarExpedientes() {
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
-          const obj = {};
-          cab.forEach((c, i) => obj[c] = row[i] !== undefined ? row[i] : '');
-          const numE = String(obj.numExp || '').trim();
-          if (!numE || numE === '0') return;
-          if (expedientes.find(e => e.num === numE)) return;
-          const tipoE = numE.startsWith('NA') ? 'NA' : 'EX';
-          const clienteF = (obj.esMenor === 'SI' && obj.titularFactura) ? obj.titularFactura : (obj.cliente || '');
-          const dniF = (obj.esMenor === 'SI' && obj.dniTitular) ? obj.dniTitular : (obj.nie || obj.dni || '');
-          expedientes.push({
-            num: numE,
-            cliente: obj.cliente || '',
-            titularFactura: clienteF,
-            dniTitular: dniF,
-            dni: obj.nie || '',
-            gestion: obj.gestion || '',
-            tipo: tipoE,
-            totalExp: obj.importeTotal || '',
-            fuente: 'extranjeria',
-            raw: obj
-          });
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
+          const numE = String(obj.numExp||'').trim(); if (!numE||numE==='0') return;
+          if (expedientes.find(e => e.num===numE)) return;
+          const tipoE = numE.startsWith('NA')?'NA':'EX';
+          const clienteF = (obj.esMenor==='SI'&&obj.titularFactura)?obj.titularFactura:(obj.cliente||'');
+          const dniF = (obj.esMenor==='SI'&&obj.dniTitular)?obj.dniTitular:(obj.nie||obj.dni||'');
+          expedientes.push({ num:numE, cliente:obj.cliente||'', titularFactura:clienteF, dniTitular:dniF, dni:obj.nie||'', gestion:obj.gestion||'', tipo:tipoE, totalExp:obj.importeTotal||'', fuente:'extranjeria', raw:obj });
         });
       }
-    } catch(e) { console.warn('Error cargando ExtranjeriaExp', e); }
+    } catch(e) { console.warn('Error cargando Extranjería', e); }
   }
 
-  // ── TRÁFICO ─────────────────────────────────────────────────
   if (urlTra) {
     try {
       const r = await fetch(urlTra + '?action=leer&hoja=EXPEDIENTES');
@@ -1264,23 +1140,15 @@ async function cargarExpedientes() {
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
-          const obj = {};
-          cab.forEach((c, i) => obj[c] = row[i] !== undefined ? row[i] : '');
-          const num = String(obj.numero || obj.numExp || '').trim();
-          if (!num || num === '0') return;
-          if (expedientes.find(e => e.num === num)) return;
-          expedientes.push({
-            num, cliente: obj.cliente || '',
-            dni: obj.dni || '', gestion: obj.tipo || 'TRÁFICO',
-            tipo: 'TR', totalExp: obj.totalFactura || '',
-            fuente: 'trafico', raw: obj
-          });
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
+          const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
+          if (expedientes.find(e => e.num===num)) return;
+          expedientes.push({ num, cliente:obj.cliente||'', dni:obj.dni||'', gestion:obj.tipo||'TRÁFICO', tipo:'TR', totalExp:obj.totalFactura||'', fuente:'trafico', raw:obj });
         });
       }
     } catch(e) { console.warn('Error cargando Tráfico', e); }
   }
 
-  // ── JURÍDICO ─────────────────────────────────────────────────
   if (urlJu) {
     try {
       const r = await fetch(urlJu + '?action=leer&hoja=EXPEDIENTES');
@@ -1288,20 +1156,9 @@ async function cargarExpedientes() {
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
-          const obj = {};
-          cab.forEach((c, i) => obj[c] = row[i] !== undefined ? row[i] : '');
-          const numJ = String(obj.numExp || '').trim();
-          if (!numJ || numJ === '0') return;
-          expedientes.push({
-            num: numJ,
-            cliente: obj.cliente || obj.nombre || '',
-            dni: obj.dni || '',
-            gestion: obj.gestion || '',
-            tipo: 'JU',
-            totalExp: obj.honorarios || obj.importeTotal || '',
-            fuente: 'juridico',
-            raw: obj
-          });
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
+          const numJ = String(obj.numExp||'').trim(); if (!numJ||numJ==='0') return;
+          expedientes.push({ num:numJ, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.gestion||'', tipo:'JU', totalExp:obj.honorarios||obj.importeTotal||'', fuente:'juridico', raw:obj });
         });
       }
     } catch(e) { console.warn('Error cargando Jurídico', e); }
@@ -1314,40 +1171,11 @@ async function cargarExpedientes() {
 
 function cargarExpedientesMock() {
   expedientes = [
-    {
-      num: 'GE26/303', cliente: 'Alejandro Sánchez Martínez', dni: '12345678A',
-      gestion: 'ACEPTACION Y ADJ HERENCIA', tipo: 'GE', fuente: 'escrituras',
-      raw: { numExp:'GE26/303', cliente:'Alejandro Sánchez Martínez', gestion:'ACEPTACION Y ADJ HERENCIA',
-             fraInfTec:'', asesoramiento:600, minuta:350, fraNotaria:600, liqITP:'', mod600c:'', mod660c:120,
-             mod650unit:60, mod650qty:1, mod650total:60, presLiqImp:120, presRecReg:180, provReg:600,
-             honorarios:650, iva:25.20, otrosServ:415, totalExp:5781.62 }
-    },
-    {
-      num: 'AS26/041', cliente: 'Carmen Rodríguez Sánchez', dni: '11223344C',
-      gestion: 'DECLARACIÓN RENTA', tipo: 'AS', fuente: 'fiscal',
-      raw: { numExp:'AS26/041', cliente:'Carmen Rodríguez Sánchez', gestion:'DECLARACIÓN RENTA',
-             importeTotal:90, honorarios:90, tasas:0, suplidos:0 }
-    },
-    {
-      num: 'EX26/001', cliente: 'Zakaria Rahali', titularFactura:'Zakaria Rahali',
-      dni: 'Y5050764R', dniTitular:'Y5050764R',
-      gestion: 'RENOVACIÓN RESIDENCIA Y TRABAJO CTA. AJENA', tipo: 'EX', fuente: 'extranjeria',
-      raw: { numExp:'EX26/001', cliente:'Zakaria Rahali', nie:'Y5050764R',
-             gestion:'RENOVACIÓN RESIDENCIA Y TRABAJO CTA. AJENA', importeTotal:240, totalTasas:'16,4', esMenor:'NO', traduccion:'NO' }
-    },
-    {
-      num: 'JU26/008', cliente: 'Construcciones López S.L.', dni: 'B12345678',
-      gestion: 'RECLAMACIÓN DEUDA', tipo: 'JU', fuente: 'juridico',
-      raw: { numExp:'JU26/008', cliente:'Construcciones López S.L.', gestion:'RECLAMACIÓN DEUDA',
-             honorarios:600, suplidos:45, importeTotal:645 }
-    },
-    {
-      num: 'EXP-2026-0025', cliente: 'Jhon Jairo Montoya Posada', dni: '',
-      gestion: 'transferencia', tipo: 'TR', fuente: 'trafico',
-      raw: { numero:'EXP-2026-0025', cliente:'JHON JAIRO MONTOYA POSADA', tipo:'transferencia',
-             tasaTrafico:65.26, impuesto:52.4, honorarios:15, ivaHonorarios:3.15,
-             totalSuplidos:117.66, totalFactura:135.81, esEmpresa:'NO', retencion:'' }
-    },
+    { num:'GE26/303', cliente:'Alejandro Sánchez Martínez', dni:'12345678A', gestion:'ACEPTACION Y ADJ HERENCIA', tipo:'GE', fuente:'escrituras', raw:{ numExp:'GE26/303', cliente:'Alejandro Sánchez Martínez', gestion:'ACEPTACION Y ADJ HERENCIA', honorarios:650, asesoramiento:600, minuta:350, fraNotaria:600, liqITP:'', mod600c:'', mod660c:120, mod650unit:60, mod650qty:1, mod650total:60, presLiqImp:120, presRecReg:180, provReg:600, iva:25.20, otrosServ:415, totalExp:5781.62 } },
+    { num:'AS26/041', cliente:'Carmen Rodríguez Sánchez', dni:'11223344C', gestion:'DECLARACIÓN RENTA', tipo:'AS', fuente:'fiscal', raw:{ numExp:'AS26/041', cliente:'Carmen Rodríguez Sánchez', gestion:'DECLARACIÓN RENTA', importeTotal:90, honorarios:90, tasas:0, suplidos:0 } },
+    { num:'EX26/001', cliente:'Zakaria Rahali', titularFactura:'Zakaria Rahali', dni:'Y5050764R', dniTitular:'Y5050764R', gestion:'RENOVACIÓN RESIDENCIA Y TRABAJO', tipo:'EX', fuente:'extranjeria', raw:{ numExp:'EX26/001', cliente:'Zakaria Rahali', nie:'Y5050764R', gestion:'RENOVACIÓN RESIDENCIA Y TRABAJO', importeTotal:240, totalTasas:'16,4', esMenor:'NO', traduccion:'NO' } },
+    { num:'JU26/008', cliente:'Construcciones López S.L.', dni:'B12345678', gestion:'RECLAMACIÓN DEUDA', tipo:'JU', fuente:'juridico', raw:{ numExp:'JU26/008', cliente:'Construcciones López S.L.', gestion:'RECLAMACIÓN DEUDA', honorarios:600, suplidos:45, importeTotal:645 } },
+    { num:'EXP-2026-0025', cliente:'Jhon Jairo Montoya Posada', dni:'', gestion:'transferencia', tipo:'TR', fuente:'trafico', raw:{ numero:'EXP-2026-0025', cliente:'JHON JAIRO MONTOYA POSADA', tipo:'transferencia', tasaTrafico:65.26, impuesto:52.4, honorarios:15, ivaHonorarios:3.15, totalSuplidos:117.66, totalFactura:135.81, esEmpresa:'NO', retencion:'' } },
   ];
   expedientesFiltrados = [...expedientes];
   renderExpedientes();
@@ -1357,27 +1185,20 @@ function cargarExpedientesMock() {
 function renderExpedientes() {
   const list = document.getElementById('exp-list');
   document.getElementById('badge-total').textContent = expedientesFiltrados.length + ' exps';
-
-  if (!expedientesFiltrados.length) {
-    list.innerHTML = '<div class="empty"><div class="icon">🔍</div>Sin resultados</div>';
-    return;
-  }
-
+  if (!expedientesFiltrados.length) { list.innerHTML = '<div class="empty"><div class="icon">🔍</div>Sin resultados</div>'; return; }
   list.innerHTML = expedientesFiltrados.map(e => {
     const yaFact = expYaFacturado(e.num);
-    return `
-    <div class="exp-card ${expSeleccionado?.num === e.num ? 'selected' : ''} ${expsSeleccionados.includes(e.num) ? 'selected-multi' : ''}"
-         onclick="toggleSeleccionMulti(event, '${e.num}')"
-         style="${yaFact ? 'opacity:0.65' : ''}">
-      <div class="check-multi">${expsSeleccionados.includes(e.num) ? '✓' : ''}</div>
+    return `<div class="exp-card ${expSeleccionado?.num===e.num?'selected':''} ${expsSeleccionados.includes(e.num)?'selected-multi':''}"
+         onclick="toggleSeleccionMulti(event,'${e.num}')" style="${yaFact?'opacity:0.65':''}">
+      <div class="check-multi">${expsSeleccionados.includes(e.num)?'✓':''}</div>
       <span class="tipo-pill tipo-${e.tipo}">${e.tipo}</span>
       <div class="exp-info">
-        <div class="exp-name">${e.cliente || '(sin nombre)'}</div>
-        <div class="exp-sub">${e.dni || ''}</div>
+        <div class="exp-name">${e.cliente||'(sin nombre)'}</div>
+        <div class="exp-sub">${e.dni||''}</div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.2rem">
         <span class="exp-num">${e.num}</span>
-        ${yaFact ? '<span style="font-size:0.6rem;background:#dcfce7;color:#166534;padding:1px 5px;border-radius:10px;font-weight:600">✅ Facturado</span>' : ''}
+        ${yaFact?'<span style="font-size:0.6rem;background:#dcfce7;color:#166534;padding:1px 5px;border-radius:10px;font-weight:600">✅ Facturado</span>':''}
       </div>
     </div>`;
   }).join('');
@@ -1393,35 +1214,29 @@ function filtrarTipo(tipo) {
 function filtrarBuscar() {
   const q = document.getElementById('buscador').value.toLowerCase();
   expedientesFiltrados = expedientes.filter(e => {
-    const matchTipo = tipoFiltro === 'TODOS' || e.tipo === tipoFiltro;
-    const matchQ = !q || e.cliente.toLowerCase().includes(q) || e.num.toLowerCase().includes(q) || (e.dni||'').toLowerCase().includes(q);
-    const matchFact = !soloSinFacturar || !expYaFacturado(e.num);
-    return matchTipo && matchQ && matchFact;
+    const matchTipo = tipoFiltro==='TODOS'||e.tipo===tipoFiltro;
+    const matchQ = !q||e.cliente.toLowerCase().includes(q)||e.num.toLowerCase().includes(q)||(e.dni||'').toLowerCase().includes(q);
+    const matchFact = !soloSinFacturar||!expYaFacturado(e.num);
+    return matchTipo&&matchQ&&matchFact;
   });
   renderExpedientes();
 }
 
 function toggleSeleccionMulti(event, num) {
   const idx = expsSeleccionados.indexOf(num);
-  if (idx >= 0) {
-    expsSeleccionados.splice(idx, 1);
-  } else {
-    expsSeleccionados.push(num);
-  }
+  if (idx>=0) expsSeleccionados.splice(idx,1); else expsSeleccionados.push(num);
   const bar = document.getElementById('multi-bar');
   const count = document.getElementById('multi-count');
-  if (expsSeleccionados.length > 0) {
+  if (expsSeleccionados.length>0) {
     bar.classList.add('visible');
     count.textContent = expsSeleccionados.length + ' expediente' + (expsSeleccionados.length>1?'s':'') + ' seleccionado' + (expsSeleccionados.length>1?'s':'');
-  } else {
-    bar.classList.remove('visible');
-  }
-  if (expsSeleccionados.length === 1) {
-    expSeleccionado = expedientes.find(e => e.num === expsSeleccionados[0]);
+  } else { bar.classList.remove('visible'); }
+  if (expsSeleccionados.length===1) {
+    expSeleccionado = expedientes.find(e=>e.num===expsSeleccionados[0]);
     if (expSeleccionado) {
       document.getElementById('f-expediente').value = expSeleccionado.num;
-      document.getElementById('f-cliente').value = expSeleccionado.titularFactura || expSeleccionado.cliente || '';
-      document.getElementById('f-dni').value = expSeleccionado.dniTitular || expSeleccionado.dni || '';
+      document.getElementById('f-cliente').value = expSeleccionado.titularFactura||expSeleccionado.cliente||'';
+      document.getElementById('f-dni').value = expSeleccionado.dniTitular||expSeleccionado.dni||'';
       actualizarSerie();
     }
   }
@@ -1430,29 +1245,25 @@ function toggleSeleccionMulti(event, num) {
 
 function cargarMulti() {
   if (!expsSeleccionados.length) return;
-  document.getElementById('lineas-body').innerHTML = '';
-  lineaId = 0;
-  const primero = expedientes.find(e => e.num === expsSeleccionados[0]);
+  document.getElementById('lineas-body').innerHTML = ''; lineaId = 0;
+  const primero = expedientes.find(e=>e.num===expsSeleccionados[0]);
   if (primero) {
-    document.getElementById('f-cliente').value = primero.titularFactura || primero.cliente || '';
-    document.getElementById('f-dni').value = primero.dniTitular || primero.dni || '';
-    expSeleccionado = primero;
-    actualizarSerie();
+    document.getElementById('f-cliente').value = primero.titularFactura||primero.cliente||'';
+    document.getElementById('f-dni').value = primero.dniTitular||primero.dni||'';
+    expSeleccionado = primero; actualizarSerie();
   }
   document.getElementById('f-expediente').value = expsSeleccionados.join(', ');
   expsSeleccionados.forEach(num => {
-    const exp = expedientes.find(e => e.num === num);
-    if (!exp) return;
-    addLineaBloque(num + ' · ' + (exp.gestion || exp.tipo));
+    const exp = expedientes.find(e=>e.num===num); if (!exp) return;
+    addLineaBloque(num+' · '+(exp.gestion||exp.tipo));
     const lineas = extraerLineasExpediente(exp);
-    lineas.forEach(l => addLinea(l.desc, '', l.qty||1, String(l.iva!==undefined?l.iva:21), l.precio));
+    lineas.forEach(l => addLinea(l.desc,'',l.qty||1,String(l.iva!==undefined?l.iva:21),l.precio));
   });
   actualizarTotales();
   document.getElementById('multi-bar').classList.remove('visible');
-  const n = expsSeleccionados.length;
-  expsSeleccionados = [];
+  const n = expsSeleccionados.length; expsSeleccionados = [];
   renderExpedientes();
-  toast('✅ ' + n + ' expedientes cargados en la factura');
+  toast('✅ '+n+' expedientes cargados en la factura');
 }
 
 function limpiarSeleccionMulti() {
@@ -1463,785 +1274,392 @@ function limpiarSeleccionMulti() {
 
 function addLineaBloque(titulo) {
   const id = ++lineaId;
-  const tbody = document.getElementById('lineas-body');
   const tr = document.createElement('tr');
-  tr.id = 'linea-' + id;
+  tr.id = 'linea-'+id;
   tr.style.background = '#f0f4ff';
-  tr.innerHTML = `
-    <td colspan="5" style="padding:0.35rem 0.5rem;font-size:0.72rem;font-weight:700;
-        color:var(--navy2);font-family:'DM Mono',monospace;letter-spacing:0.5px;
-        border-bottom:1px solid var(--navy2)">
-      📁 ${titulo}
-    </td>
-    <td><button class="btn-del" onclick="delLinea(${id})">✕</button></td>
-  `;
-  tbody.appendChild(tr);
+  tr.innerHTML = `<td colspan="5" style="padding:0.35rem 0.5rem;font-size:0.72rem;font-weight:700;color:var(--navy2);font-family:'DM Mono',monospace;letter-spacing:0.5px;border-bottom:1px solid var(--navy2)">📁 ${titulo}</td><td><button class="btn-del" onclick="delLinea(${id})">✕</button></td>`;
+  document.getElementById('lineas-body').appendChild(tr);
 }
 
-function seleccionarExp(num) {
-  expSeleccionado = expedientes.find(e => e.num === num);
-  if (!expSeleccionado) return;
-  document.getElementById('f-expediente').value = expSeleccionado.num;
-  document.getElementById('f-cliente').value = expSeleccionado.titularFactura || expSeleccionado.cliente || '';
-  document.getElementById('f-dni').value = expSeleccionado.dniTitular || expSeleccionado.dni || '';
-  actualizarSerie();
-  document.getElementById('lineas-body').innerHTML = '';
-  lineaId = 0;
-  const lineas = extraerLineasExpediente(expSeleccionado);
-  if (lineas.length > 0) {
-    lineas.forEach(l => addLinea(l.desc, '', l.qty || 1, String(l.iva !== undefined ? l.iva : 21), l.precio));
-  } else {
-    addLinea('', '', 1, '21', '');
-  }
-  renderExpedientes();
-  actualizarTotales();
-}
-
-// =============================================
-// HELPERS EXPEDIENTES
-// =============================================
 function expYaFacturado(num) {
-  return facturas.some(f => {
-    if (f.estado === 'anulada') return false;
-    const exps = (f.expediente || '').split(',').map(s => s.trim());
-    return exps.includes(num);
-  });
+  return facturas.some(f => { if (f.estado==='anulada') return false; const exps=(f.expediente||'').split(',').map(s=>s.trim()); return exps.includes(num); });
 }
 
 function toggleFiltroFacturado(soloSin) {
   soloSinFacturar = soloSin;
-  document.getElementById('btn-pendientes').className = soloSin ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm';
-  document.getElementById('btn-todos').className = soloSin ? 'btn btn-outline btn-sm' : 'btn btn-primary btn-sm';
-  document.getElementById('btn-pendientes').style.flex = '1';
-  document.getElementById('btn-pendientes').style.fontSize = '0.72rem';
-  document.getElementById('btn-todos').style.flex = '1';
-  document.getElementById('btn-todos').style.fontSize = '0.72rem';
+  document.getElementById('btn-pendientes').className = soloSin?'btn btn-primary btn-sm':'btn btn-outline btn-sm';
+  document.getElementById('btn-todos').className = soloSin?'btn btn-outline btn-sm':'btn btn-primary btn-sm';
+  document.getElementById('btn-pendientes').style.flex='1'; document.getElementById('btn-pendientes').style.fontSize='0.72rem';
+  document.getElementById('btn-todos').style.flex='1'; document.getElementById('btn-todos').style.fontSize='0.72rem';
   filtrarBuscar();
 }
 
-// =============================================
-// MAPEO DE LÍNEAS POR TIPO
-// =============================================
 function extraerLineasExpediente(exp) {
-  const d = exp.raw || {};
-  const lineas = [];
-  const gestion = exp.gestion || '';
-
-  function addL(desc, precio) {
-    const p = parseFloat(String(precio).replace(',', '.')) || 0;
-    if (p > 0) lineas.push({ desc, precio: p, iva: 21 });
+  const d = exp.raw||{}, lineas=[], gestion=exp.gestion||'';
+  function addL(desc,precio){ const p=parseFloat(String(precio).replace(',','.'))||0; if(p>0) lineas.push({desc,precio:p,iva:21}); }
+  function addS(desc,precio){ const p=parseFloat(String(precio).replace(',','.'))||0; if(p>0) lineas.push({desc,precio:p,iva:0}); }
+  if (exp.tipo==='GE') {
+    addL('Honorarios gestoria · '+gestion,d.honorarios); addL('Asesoramiento juridico',d.asesoramiento);
+    addL('Minuta notaria',d.minuta); addS('Factura notaria (suplido)',d.fraNotaria);
+    addS('Informe tecnico (suplido)',d.fraInfTec); addL('Liquidacion y presentacion ITP - Mod. 600',d.mod600c);
+    addL('Liquidacion y presentacion Sucesiones - Mod. 660',d.mod660c);
+    if (parseFloat(d.mod650unit)>0&&parseFloat(d.mod650qty)>1) { const qty=parseInt(d.mod650qty)||1; lineas.push({desc:'Liquidacion y presentacion Donaciones - Mod. 650',qty,precio:parseFloat(d.mod650unit)||0,iva:21}); }
+    else addL('Liquidacion y presentacion Donaciones - Mod. 650',d.mod650total||d.mod650unit);
+    addS('Importe del impuesto - ITP (suplido)',d.liqITP); addS('Importe del impuesto - Sucesiones/Donaciones (suplido)',d.presLiqImp);
+    addS('Plusvalia municipal - importe del impuesto (suplido)',d.presPlusvalia);
+    addL('Presentacion y recogida en Registro de la Propiedad',d.presRecReg);
+    addS('Provision factura Registro de la Propiedad (suplido)',d.provReg); addL('Otros servicios',d.otrosServ);
+  } else if (exp.tipo==='EX'||exp.tipo==='NA') {
+    const total=parseFloat(String(d.importeTotal).replace(',','.'))||0, tasas=parseFloat(String(d.totalTasas).replace(',','.'))||0, honorarios=total-tasas;
+    if (honorarios>0) addL('Honorarios gestoría · '+gestion,honorarios); if (tasas>0) addS('Tasas administrativas (suplido)',tasas);
+    if (d.traduccion==='SI') addL('Traducción jurada de documentos',''); if (total>0&&honorarios<=0) addL('Honorarios gestoría · '+gestion,total);
+  } else if (exp.tipo==='AS') {
+    addL('Honorarios asesoría fiscal · '+gestion,d.honorarios||d.importeTotal||d.totalExp);
+    addS('Tasas / suplidos',d.tasas||d.suplidos||d.totalTasas);
+  } else if (exp.tipo==='TR') {
+    const honTR=parseFloat(String(d.honorarios).replace(',','.'))||0, tasaTR=parseFloat(String(d.tasaTrafico).replace(',','.'))||0, impTR=parseFloat(String(d.impuesto).replace(',','.'))||0;
+    if (honTR>0) addL('Honorarios gestoría · '+(gestion||'Tráfico'),honTR);
+    if (tasaTR>0) addS('Tasa de tráfico (suplido)',tasaTR); if (impTR>0) addS('ITP · Impuesto sobre Transmisiones Patrimoniales (suplido)',impTR);
+  } else if (exp.tipo==='JU') {
+    addL('Honorarios servicios jurídicos · '+gestion,d.honorarios||d.importeTotal||d.totalExp);
+    addS('Suplidos',d.suplidos||d.tasas);
   }
-  function addS(desc, precio) {
-    const p = parseFloat(String(precio).replace(',', '.')) || 0;
-    if (p > 0) lineas.push({ desc, precio: p, iva: 0 });
-  }
-
-  if (exp.tipo === 'GE') {
-    addL('Honorarios gestoria · ' + gestion, d.honorarios);
-    addL('Asesoramiento juridico', d.asesoramiento);
-    addL('Minuta notaria', d.minuta);
-    addS('Factura notaria (suplido)', d.fraNotaria);
-    addS('Informe tecnico (suplido)', d.fraInfTec);
-    addL('Liquidacion y presentacion ITP - Mod. 600', d.mod600c);
-    addL('Liquidacion y presentacion Sucesiones - Mod. 660', d.mod660c);
-    if (parseFloat(d.mod650unit) > 0 && parseFloat(d.mod650qty) > 1) {
-      const qty = parseInt(d.mod650qty) || 1;
-      lineas.push({ desc: 'Liquidacion y presentacion Donaciones - Mod. 650', qty, precio: parseFloat(d.mod650unit)||0, iva: 21 });
-    } else {
-      addL('Liquidacion y presentacion Donaciones - Mod. 650', d.mod650total || d.mod650unit);
-    }
-    addS('Importe del impuesto - ITP (suplido)', d.liqITP);
-    addS('Importe del impuesto - Sucesiones/Donaciones (suplido)', d.presLiqImp);
-    addS('Plusvalia municipal - importe del impuesto (suplido)', d.presPlusvalia);
-    addL('Presentacion y recogida en Registro de la Propiedad', d.presRecReg);
-    addS('Provision factura Registro de la Propiedad (suplido)', d.provReg);
-    addL('Otros servicios', d.otrosServ);
-
-  } else if (exp.tipo === 'EX' || exp.tipo === 'NA') {
-    const total = parseFloat(String(d.importeTotal).replace(',','.')) || 0;
-    const tasas = parseFloat(String(d.totalTasas).replace(',','.')) || 0;
-    const honorarios = total - tasas;
-    if (honorarios > 0) addL('Honorarios gestoría · ' + gestion, honorarios);
-    if (tasas > 0) addS('Tasas administrativas (suplido)', tasas);
-    if (d.traduccion === 'SI') addL('Traducción jurada de documentos', '');
-    if (total > 0 && honorarios <= 0) addL('Honorarios gestoría · ' + gestion, total);
-
-  } else if (exp.tipo === 'AS') {
-    addL('Honorarios asesoría fiscal · ' + gestion, d.honorarios || d.importeTotal || d.totalExp);
-    addS('Tasas / suplidos', d.tasas || d.suplidos || d.totalTasas);
-
-  } else if (exp.tipo === 'TR') {
-    const honTR = parseFloat(String(d.honorarios).replace(',','.')) || 0;
-    const tasaTR = parseFloat(String(d.tasaTrafico).replace(',','.')) || 0;
-    const impTR  = parseFloat(String(d.impuesto).replace(',','.')) || 0;
-    if (honTR > 0) addL('Honorarios gestoría · ' + (gestion || 'Tráfico'), honTR);
-    if (tasaTR > 0) addS('Tasa de tráfico (suplido)', tasaTR);
-    if (impTR  > 0) addS('ITP · Impuesto sobre Transmisiones Patrimoniales (suplido)', impTR);
-    if (d.esEmpresa === 'SÍ') {
-      const pctRet = parseFloat(String(d.retencion).replace(',','.')) || 15;
-      if (honTR > 0 && pctRet > 0) {
-        const impRet = round2(honTR * pctRet / 100);
-        lineas.push({ desc: 'Retencion IRPF ' + pctRet + '% s/honorarios', qty: 1, precio: -impRet, iva: 0 });
-      }
-    }
-
-  } else if (exp.tipo === 'JU') {
-    addL('Honorarios servicios jurídicos · ' + gestion, d.honorarios || d.importeTotal || d.totalExp);
-    addS('Suplidos', d.suplidos || d.tasas);
-  }
-
-  return lineas.filter(l => l.precio > 0 || l.desc);
+  return lineas.filter(l=>l.precio>0||l.desc);
 }
 
-// =============================================
-// NUMERACIÓN
-// =============================================
 function actualizarSerie() {
   const exp = document.getElementById('f-expediente').value;
-  const esJU = exp.startsWith('JU') || expSeleccionado?.tipo === 'JU';
-  const serie = esJU ? 'JU26' : 'AS26';
-  const cnt = esJU ? contadorJU : contadorAS;
-  const num = serie + '/' + String(cnt + 1).padStart(3, '0');
+  const esJU = exp.startsWith('JU')||expSeleccionado?.tipo==='JU';
+  const serie = esJU?'JU26':'AS26';
+  const cnt = esJU?contadorJU:contadorAS;
+  const num = serie+'/'+String(cnt+1).padStart(3,'0');
   document.getElementById('f-numero').value = num;
   document.getElementById('badge-serie').textContent = num;
 }
 
-// =============================================
-// LÍNEAS
-// =============================================
-function addLinea(desc = '', ref = '', qty = 1, iva = '21', precio = '') {
+function addLinea(desc='',ref='',qty=1,iva='21',precio='') {
   const id = ++lineaId;
-  const tbody = document.getElementById('lineas-body');
-  const tr = document.createElement('tr');
-  tr.id = 'linea-' + id;
-  tr.innerHTML = `
-    <td class="col-desc"><input type="text" value="${desc}" placeholder="Descripción del servicio" onchange="actualizarTotales()"></td>
-    <td class="col-qty"><input type="number" value="${qty}" min="1" step="1" style="text-align:center" onchange="calcLinea(${id}); actualizarTotales()"></td>
-    <td class="col-price"><input type="number" value="${precio}" min="0" step="0.01" placeholder="0.00" oninput="calcLinea(${id}); actualizarTotales()"></td>
-    <td class="col-tipo">
-      <select onchange="actualizarTotales()">
-        <option value="21" ${iva==='21'?'selected':''}>21%</option>
-        <option value="10" ${iva==='10'?'selected':''}>10%</option>
-        <option value="4" ${iva==='4'?'selected':''}>4%</option>
-        <option value="0" ${iva==='0'?'selected':''}>0%</option>
-      </select>
-    </td>
+  const tr = document.createElement('tr'); tr.id='linea-'+id;
+  tr.innerHTML=`<td class="col-desc"><input type="text" value="${desc}" placeholder="Descripción del servicio" onchange="actualizarTotales()"></td>
+    <td class="col-qty"><input type="number" value="${qty}" min="1" step="1" style="text-align:center" onchange="calcLinea(${id});actualizarTotales()"></td>
+    <td class="col-price"><input type="number" value="${precio}" min="0" step="0.01" placeholder="0.00" oninput="calcLinea(${id});actualizarTotales()"></td>
+    <td class="col-tipo"><select onchange="actualizarTotales()">
+      <option value="21" ${iva==='21'?'selected':''}>21%</option>
+      <option value="10" ${iva==='10'?'selected':''}>10%</option>
+      <option value="4"  ${iva==='4'?'selected':''}>4%</option>
+      <option value="0"  ${iva==='0'?'selected':''}>0%</option>
+    </select></td>
     <td class="col-sub"><input type="text" id="sub-${id}" readonly style="background:#f8f8f8;text-align:right;font-family:'DM Mono',monospace" value="0,00 €"></td>
-    <td class="col-del"><button class="btn-del" onclick="delLinea(${id})">✕</button></td>
-  `;
-  tbody.appendChild(tr);
-  calcLinea(id);
-  actualizarTotales();
+    <td class="col-del"><button class="btn-del" onclick="delLinea(${id})">✕</button></td>`;
+  document.getElementById('lineas-body').appendChild(tr);
+  calcLinea(id); actualizarTotales();
 }
 
 function calcLinea(id) {
-  const tr = document.getElementById('linea-' + id);
-  if (!tr) return;
+  const tr = document.getElementById('linea-'+id); if (!tr) return;
   const inputs = tr.querySelectorAll('input');
-  const qty = parseFloat(inputs[1].value) || 0;
-  const precio = parseFloat(inputs[2].value) || 0;
-  const sub = round2(qty * precio);
-  document.getElementById('sub-' + id).value = sub.toLocaleString('es-ES', {minimumFractionDigits:2}) + ' €';
+  const qty = parseFloat(inputs[1].value)||0, precio = parseFloat(inputs[2].value)||0;
+  document.getElementById('sub-'+id).value = round2(qty*precio).toLocaleString('es-ES',{minimumFractionDigits:2})+' €';
 }
 
-function delLinea(id) {
-  const tr = document.getElementById('linea-' + id);
-  if (tr) tr.remove();
-  actualizarTotales();
-}
+function delLinea(id) { document.getElementById('linea-'+id)?.remove(); actualizarTotales(); }
 
 function actualizarTotales() {
-  let base = 0, cuotaIVA = 0;
+  let base=0, cuotaIVA=0;
   document.querySelectorAll('#lineas-body tr').forEach(tr => {
-    const inputs = tr.querySelectorAll('input');
-    const select = tr.querySelector('select');
-    if (!inputs[1] || !inputs[2]) return;
-    const qty = parseFloat(inputs[1].value) || 0;
-    const precio = parseFloat(inputs[2].value) || 0;
-    const ivaRate = select ? parseFloat(select.value) / 100 : 0.21;
-    const subtotal = round2(qty * precio);
-    base += subtotal;
-    cuotaIVA += round2(subtotal * ivaRate);
+    const inputs=tr.querySelectorAll('input'), select=tr.querySelector('select');
+    if (!inputs[1]||!inputs[2]) return;
+    const qty=parseFloat(inputs[1].value)||0, precio=parseFloat(inputs[2].value)||0;
+    const ivaRate=select?parseFloat(select.value)/100:0.21;
+    const sub=round2(qty*precio); base+=sub; cuotaIVA+=round2(sub*ivaRate);
   });
-  base = round2(base); cuotaIVA = round2(cuotaIVA);
-  const total = round2(base + cuotaIVA);
-  document.getElementById('t-base').textContent = fmt(base);
-  document.getElementById('t-iva').textContent = fmt(cuotaIVA);
-  document.getElementById('t-total').textContent = fmt(total);
+  base=round2(base); cuotaIVA=round2(cuotaIVA); const total=round2(base+cuotaIVA);
+  document.getElementById('t-base').textContent=fmt(base);
+  document.getElementById('t-iva').textContent=fmt(cuotaIVA);
+  document.getElementById('t-total').textContent=fmt(total);
 }
 
-// =============================================
-// PROFORMA
-// =============================================
-function guardarProforma() {
-  const expediente = document.getElementById('f-expediente').value;
-  const cliente = document.getElementById('f-cliente').value;
-  if (!cliente) { toast('⚠️ Falta el nombre del cliente', true); return; }
-  const lineas = recogerLineas();
-  if (!lineas) return;
-  const { base, cuotaIVA, total } = calcTotalesLineas(lineas);
-  const numProforma = expediente ? 'PRO-' + expediente : 'PRO-' + Date.now();
-  const idxExist = facturas.findIndex(f => f.estado === 'proforma' && f.expediente === expediente);
-  const pf = {
-    id: idxExist >= 0 ? facturas[idxExist].id : Date.now(),
-    numero: numProforma, serie: 'PRO',
-    fecha: document.getElementById('f-fecha').value,
-    expediente, cliente,
-    dni: document.getElementById('f-dni').value,
-    tel: document.getElementById('f-tel').value,
-    dir: document.getElementById('f-dir-cli').value,
-    pago: document.getElementById('f-pago').value,
-    venc: document.getElementById('f-venc').value,
-    obs: document.getElementById('f-obs').value,
-    lineas, base, cuotaIVA, total,
-    estado: 'proforma', pagada: false, importePagado: 0, fechaPago: ''
-  };
-  if (idxExist >= 0) { facturas[idxExist] = pf; toast('📋 Proforma actualizada: ' + numProforma); }
-  else { facturas.push(pf); toast('📋 Proforma guardada: ' + numProforma); }
-  localStorage.setItem('gjg_facturas', JSON.stringify(facturas));
-  renderFacturas();
-}
-
-function editarProforma(id) {
-  const pf = facturas.find(x => x.id === id);
-  if (!pf) return;
-  document.getElementById('f-expediente').value = pf.expediente || '';
-  document.getElementById('f-cliente').value = pf.cliente || '';
-  document.getElementById('f-dni').value = pf.dni || '';
-  document.getElementById('f-tel').value = pf.tel || '';
-  document.getElementById('f-dir-cli').value = pf.dir || '';
-  document.getElementById('f-fecha').value = pf.fecha || hoy();
-  document.getElementById('f-pago').value = pf.pago || 'Efectivo';
-  document.getElementById('f-obs').value = pf.obs || '';
-  document.getElementById('lineas-body').innerHTML = '';
-  lineaId = 0;
-  (pf.lineas || []).forEach(l => {
-    if (l.esBloque) { addLineaBloque(l.desc.replace('📁 ','')); }
-    else { addLinea(l.desc, '', l.qty||1, String(l.iva!==undefined?l.iva:21), l.precio); }
-  });
-  expSeleccionado = expedientes.find(e => e.num === pf.expediente) || null;
-  actualizarSerie();
-  actualizarTotales();
-  document.getElementById('badge-serie').textContent += ' (editando proforma)';
-  setView('nueva');
-  toast('✏️ Proforma cargada — revisa y pulsa "Emitir factura"');
-}
-
-// =============================================
-// HELPERS LÍNEAS
-// =============================================
 function recogerLineas() {
-  const lineas = [];
+  const lineas=[];
   document.querySelectorAll('#lineas-body tr').forEach(tr => {
-    const inputs = tr.querySelectorAll('input');
-    const select = tr.querySelector('select');
-    if (!inputs[0] || !inputs[1] || !inputs[2]) {
-      const td = tr.querySelector('td');
-      if (td && td.textContent.trim().startsWith('📁')) {
-        lineas.push({ desc: td.textContent.trim(), qty:1, precio:0, iva:0, esBloque:true });
-      }
-      return;
+    const inputs=tr.querySelectorAll('input'), select=tr.querySelector('select');
+    if (!inputs[0]||!inputs[1]||!inputs[2]) {
+      const td=tr.querySelector('td'); if(td&&td.textContent.trim().startsWith('📁')) lineas.push({desc:td.textContent.trim(),qty:1,precio:0,iva:0,esBloque:true}); return;
     }
-    lineas.push({
-      desc: inputs[0].value,
-      qty: parseFloat(inputs[1].value) || 1,
-      precio: parseFloat(inputs[2].value) || 0,
-      iva: select ? parseFloat(select.value) : 21
-    });
+    lineas.push({desc:inputs[0].value,qty:parseFloat(inputs[1].value)||1,precio:parseFloat(inputs[2].value)||0,iva:select?parseFloat(select.value):21});
   });
-  if (!lineas.length || lineas.every(l => !l.precio && l.precio !== 0)) {
-    toast('⚠️ Añade al menos una línea con importe', true);
-    return null;
-  }
+  if (!lineas.length||lineas.every(l=>!l.precio&&l.precio!==0)) { toast('⚠️ Añade al menos una línea con importe',true); return null; }
   return lineas;
 }
 
 function calcTotalesLineas(lineas) {
-  let base = 0, cuotaIVA = 0;
-  lineas.forEach(l => {
-    const sub = round2(l.qty * l.precio);
-    base += sub;
-    cuotaIVA += round2(sub * l.iva / 100);
-  });
-  return { base: round2(base), cuotaIVA: round2(cuotaIVA), total: round2(base + cuotaIVA) };
+  let base=0,cuotaIVA=0;
+  lineas.forEach(l=>{ const sub=round2(l.qty*l.precio); base+=sub; cuotaIVA+=round2(sub*l.iva/100); });
+  return {base:round2(base),cuotaIVA:round2(cuotaIVA),total:round2(base+cuotaIVA)};
 }
 
-// =============================================
-// GUARDAR FACTURA
-// =============================================
+function guardarProforma() {
+  const expediente=document.getElementById('f-expediente').value, cliente=document.getElementById('f-cliente').value;
+  if (!cliente) { toast('⚠️ Falta el nombre del cliente',true); return; }
+  const lineas=recogerLineas(); if (!lineas) return;
+  const {base,cuotaIVA,total}=calcTotalesLineas(lineas);
+  const numProforma=expediente?'PRO-'+expediente:'PRO-'+Date.now();
+  const idxExist=facturas.findIndex(f=>f.estado==='proforma'&&f.expediente===expediente);
+  const pf={id:idxExist>=0?facturas[idxExist].id:Date.now(),numero:numProforma,serie:'PRO',fecha:document.getElementById('f-fecha').value,expediente,cliente,dni:document.getElementById('f-dni').value,tel:document.getElementById('f-tel').value,dir:document.getElementById('f-dir-cli').value,pago:document.getElementById('f-pago').value,venc:document.getElementById('f-venc').value,obs:document.getElementById('f-obs').value,lineas,base,cuotaIVA,total,estado:'proforma',pagada:false,importePagado:0,fechaPago:''};
+  if (idxExist>=0) { facturas[idxExist]=pf; toast('📋 Proforma actualizada: '+numProforma); }
+  else { facturas.push(pf); toast('📋 Proforma guardada: '+numProforma); }
+  localStorage.setItem('gjg_facturas',JSON.stringify(facturas)); renderFacturas();
+}
+
+function editarProforma(id) {
+  const pf=facturas.find(x=>x.id===id); if (!pf) return;
+  document.getElementById('f-expediente').value=pf.expediente||''; document.getElementById('f-cliente').value=pf.cliente||'';
+  document.getElementById('f-dni').value=pf.dni||''; document.getElementById('f-tel').value=pf.tel||'';
+  document.getElementById('f-dir-cli').value=pf.dir||''; document.getElementById('f-fecha').value=pf.fecha||hoy();
+  document.getElementById('f-pago').value=pf.pago||'Efectivo'; document.getElementById('f-obs').value=pf.obs||'';
+  document.getElementById('lineas-body').innerHTML=''; lineaId=0;
+  (pf.lineas||[]).forEach(l=>{ if(l.esBloque) addLineaBloque(l.desc.replace('📁 ','')); else addLinea(l.desc,'',l.qty||1,String(l.iva!==undefined?l.iva:21),l.precio); });
+  expSeleccionado=expedientes.find(e=>e.num===pf.expediente)||null;
+  actualizarSerie(); actualizarTotales();
+  setView('nueva'); toast('✏️ Proforma cargada — revisa y pulsa "Emitir factura"');
+}
+
 function guardarFactura() {
-  const numero = document.getElementById('f-numero').value;
-  const cliente = document.getElementById('f-cliente').value;
-  if (!cliente) { toast('⚠️ Falta el nombre del cliente', true); return; }
-  const lineas = recogerLineas();
-  if (!lineas) return;
-  const { base, cuotaIVA, total } = calcTotalesLineas(lineas);
-  const fact = {
-    id: Date.now(), numero,
-    serie: numero.startsWith('JU') ? 'JU26' : 'AS26',
-    fecha: document.getElementById('f-fecha').value,
-    expediente: document.getElementById('f-expediente').value,
-    cliente, dni: document.getElementById('f-dni').value,
-    tel: document.getElementById('f-tel').value,
-    dir: document.getElementById('f-dir-cli').value,
-    pago: document.getElementById('f-pago').value,
-    venc: document.getElementById('f-venc').value,
-    obs: document.getElementById('f-obs').value,
-    lineas, base, cuotaIVA, total,
-    estado: 'emitida', pagada: false, importePagado: 0, fechaPago: ''
-  };
-  const idxPro = facturas.findIndex(f => f.estado === 'proforma' && f.expediente === fact.expediente);
-  if (idxPro >= 0) facturas.splice(idxPro, 1);
+  const numero=document.getElementById('f-numero').value, cliente=document.getElementById('f-cliente').value;
+  if (!cliente) { toast('⚠️ Falta el nombre del cliente',true); return; }
+  const lineas=recogerLineas(); if (!lineas) return;
+  const {base,cuotaIVA,total}=calcTotalesLineas(lineas);
+  const fact={id:Date.now(),numero,serie:numero.startsWith('JU')?'JU26':'AS26',fecha:document.getElementById('f-fecha').value,expediente:document.getElementById('f-expediente').value,cliente,dni:document.getElementById('f-dni').value,tel:document.getElementById('f-tel').value,dir:document.getElementById('f-dir-cli').value,pago:document.getElementById('f-pago').value,venc:document.getElementById('f-venc').value,obs:document.getElementById('f-obs').value,lineas,base,cuotaIVA,total,estado:'emitida',pagada:false,importePagado:0,fechaPago:''};
+  const idxPro=facturas.findIndex(f=>f.estado==='proforma'&&f.expediente===fact.expediente);
+  if (idxPro>=0) facturas.splice(idxPro,1);
   facturas.push(fact);
-  localStorage.setItem('gjg_facturas', JSON.stringify(facturas));
-  if (fact.serie === 'JU26') { contadorJU++; localStorage.setItem('gjg_cnt_JU', contadorJU); }
-  else { contadorAS++; localStorage.setItem('gjg_cnt_AS', contadorAS); }
-  actualizarSerie();
-  toast('✅ Factura ' + numero + ' guardada');
-  renderFacturas();
-  document.getElementById('badge-facturas').textContent = facturas.length;
+  localStorage.setItem('gjg_facturas',JSON.stringify(facturas));
+  if (fact.serie==='JU26') { contadorJU++; localStorage.setItem('gjg_cnt_JU',contadorJU); }
+  else { contadorAS++; localStorage.setItem('gjg_cnt_AS',contadorAS); }
+  actualizarSerie(); toast('✅ Factura '+numero+' guardada'); renderFacturas();
 }
 
-// =============================================
-// ESTADO DE PAGO
-// =============================================
 function estaFacturaPagada(f) {
-  if (!f || !f.expediente) return false;
-  const exp = expedientes.find(e => e.num === f.expediente);
-  if (!exp || !exp.raw) return false;
-  let pagosJson = exp.raw.pagos_json || exp.raw.pagos || '[]';
-  try { if (typeof pagosJson === 'string') pagosJson = JSON.parse(pagosJson); } catch(e) { return false; }
-  if (!Array.isArray(pagosJson) || !pagosJson.length) return false;
-  const totalPagado = pagosJson.reduce((sum, p) => sum + (parseFloat(String(p.importe||0).replace(',','.')) || 0), 0);
-  return Math.round((totalPagado + Number.EPSILON) * 100) / 100 >= Math.round((f.total + Number.EPSILON) * 100) / 100;
+  if (!f||!f.expediente) return false;
+  const exp=expedientes.find(e=>e.num===f.expediente); if (!exp||!exp.raw) return false;
+  let pagosJson=exp.raw.pagos_json||exp.raw.pagos||'[]';
+  try { if (typeof pagosJson==='string') pagosJson=JSON.parse(pagosJson); } catch(e) { return false; }
+  if (!Array.isArray(pagosJson)||!pagosJson.length) return false;
+  const totalPagado=pagosJson.reduce((sum,p)=>sum+(parseFloat(String(p.importe||0).replace(',','.'))||0),0);
+  return Math.round((totalPagado+Number.EPSILON)*100)/100>=Math.round((f.total+Number.EPSILON)*100)/100;
 }
 
-// =============================================
-// LISTA FACTURAS
-// =============================================
 function renderFacturas() {
-  const list = document.getElementById('fact-list');
-  if (!list) return;
-  const q = (document.getElementById('busq-fact')?.value || '').toLowerCase();
-  const serie = document.getElementById('filtro-serie')?.value || '';
-  const filtradas = facturas.filter(f => {
-    const matchQ = !q || f.numero.toLowerCase().includes(q) || f.cliente.toLowerCase().includes(q) || (f.expediente||'').toLowerCase().includes(q);
-    const matchS = !serie || f.serie === serie;
-    return matchQ && matchS;
-  }).sort((a,b) => b.id - a.id);
-  document.getElementById('badge-facturas').textContent = facturas.length;
-  if (!filtradas.length) {
-    list.innerHTML = '<div class="empty"><div class="icon">🧾</div>No hay facturas aún</div>';
-    return;
-  }
-  list.innerHTML = filtradas.map(f => `
+  const list=document.getElementById('fact-list'); if (!list) return;
+  const q=(document.getElementById('busq-fact')?.value||'').toLowerCase();
+  const serie=document.getElementById('filtro-serie')?.value||'';
+  const filtradas=facturas.filter(f=>{
+    const matchQ=!q||f.numero.toLowerCase().includes(q)||f.cliente.toLowerCase().includes(q)||(f.expediente||'').toLowerCase().includes(q);
+    const matchS=!serie||f.serie===serie; return matchQ&&matchS;
+  }).sort((a,b)=>b.id-a.id);
+  document.getElementById('badge-facturas').textContent=facturas.length;
+  if (!filtradas.length) { list.innerHTML='<div class="empty"><div class="icon">🧾</div>No hay facturas aún</div>'; return; }
+  list.innerHTML=filtradas.map(f=>`
     <div class="fact-row">
       <span class="fact-num">${f.numero}</span>
-      <span style="font-size:0.72rem;color:var(--gray2)">${f.fecha || ''}</span>
+      <span style="font-size:0.72rem;color:var(--gray2)">${f.fecha||''}</span>
       <span class="fact-cliente">${f.cliente}</span>
-      <span style="font-size:0.72rem;color:var(--gray2);flex-shrink:0">${f.expediente || ''}</span>
+      <span style="font-size:0.72rem;color:var(--gray2);flex-shrink:0">${f.expediente||''}</span>
       <span class="fact-importe">${fmt(f.total)}</span>
       <span class="fact-estado estado-${f.estado}">${f.estado}</span>
       <button class="btn btn-outline btn-sm" onclick="verFactura(${f.id})">👁️</button>
-      ${f.estado === 'proforma'
-        ? `<button class="btn btn-sm" style="background:#fef9c3;color:#854d0e;border:1px solid #d97706" onclick="editarProforma(${f.id})">✏️ Editar/Emitir</button>`
-        : estaFacturaPagada(f)
-          ? `<span class="fact-estado estado-pagada">✅ Pagada</span>`
-          : `<span class="fact-estado estado-pendiente">🔴 Pendiente</span>`}
-      ${f.estado !== 'proforma' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b" onclick="anularFactura(${f.id})">✕ Anular</button>` : ''}
-    </div>
-  `).join('');
+      ${f.estado==='proforma'?`<button class="btn btn-sm" style="background:#fef9c3;color:#854d0e;border:1px solid #d97706" onclick="editarProforma(${f.id})">✏️ Editar/Emitir</button>`:estaFacturaPagada(f)?'<span class="fact-estado estado-pagada">✅ Pagada</span>':'<span class="fact-estado estado-pendiente">🔴 Pendiente</span>'}
+      ${f.estado!=='proforma'?`<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b" onclick="anularFactura(${f.id})">✕ Anular</button>`:''}
+    </div>`).join('');
 }
 
-function verFactura(id) {
-  const f = facturas.find(x => x.id === id);
-  if (!f) return;
-  mostrarPreview(f);
-}
+function verFactura(id) { const f=facturas.find(x=>x.id===id); if(f) mostrarPreview(f); }
 
 function anularFactura(id) {
-  const f = facturas.find(x => x.id === id);
-  if (!f) return;
-  if (!confirm('¿Anular la factura ' + f.numero + '?\n\nSe marcará como anulada (no se borra para control fiscal).')) return;
-  f.estado = 'anulada';
-  localStorage.setItem('gjg_facturas', JSON.stringify(facturas));
-  renderFacturas();
-  toast('❌ Factura ' + f.numero + ' anulada');
+  const f=facturas.find(x=>x.id===id); if(!f) return;
+  if(!confirm('¿Anular la factura '+f.numero+'?')) return;
+  f.estado='anulada'; localStorage.setItem('gjg_facturas',JSON.stringify(facturas)); renderFacturas(); toast('❌ Factura '+f.numero+' anulada');
 }
 
-// =============================================
-// PREVIEW / IMPRESIÓN
-// =============================================
 function previsualizarFactura() {
-  const f = recogerDatosFormulario();
-  if (!f) return;
-  mostrarPreview(f);
-}
-
-function recogerDatosFormulario() {
-  const cliente = document.getElementById('f-cliente').value;
-  if (!cliente) { toast('⚠️ Falta el nombre del cliente', true); return null; }
-  const lineas = [];
-  document.querySelectorAll('#lineas-body tr').forEach(tr => {
-    const inputs = tr.querySelectorAll('input');
-    const select = tr.querySelector('select');
-    if (!inputs[0]) return;
-    lineas.push({ desc: inputs[0].value, qty: parseFloat(inputs[1]?.value)||1, precio: parseFloat(inputs[2]?.value)||0, iva: select ? parseFloat(select.value) : 21 });
+  const cliente=document.getElementById('f-cliente').value; if(!cliente){toast('⚠️ Falta el nombre del cliente',true);return;}
+  const lineas=[];
+  document.querySelectorAll('#lineas-body tr').forEach(tr=>{
+    const inputs=tr.querySelectorAll('input'),select=tr.querySelector('select'); if(!inputs[0]) return;
+    lineas.push({desc:inputs[0].value,qty:parseFloat(inputs[1]?.value)||1,precio:parseFloat(inputs[2]?.value)||0,iva:select?parseFloat(select.value):21});
   });
-  let base = 0, cuotaIVA = 0;
-  lineas.forEach(l => { const sub = round2(l.qty * l.precio); base += sub; cuotaIVA += round2(sub * l.iva / 100); });
-  base = round2(base); cuotaIVA = round2(cuotaIVA);
-  return {
-    numero: document.getElementById('f-numero').value,
-    fecha: document.getElementById('f-fecha').value,
-    expediente: document.getElementById('f-expediente').value,
-    cliente, dni: document.getElementById('f-dni').value,
-    tel: document.getElementById('f-tel').value,
-    dir: document.getElementById('f-dir-cli').value,
-    pago: document.getElementById('f-pago').value,
-    obs: document.getElementById('f-obs').value,
-    lineas, base, cuotaIVA, total: round2(base + cuotaIVA)
-  };
+  let base=0,cuotaIVA=0;
+  lineas.forEach(l=>{const sub=round2(l.qty*l.precio);base+=sub;cuotaIVA+=round2(sub*l.iva/100);});
+  base=round2(base);cuotaIVA=round2(cuotaIVA);
+  mostrarPreview({numero:document.getElementById('f-numero').value,fecha:document.getElementById('f-fecha').value,expediente:document.getElementById('f-expediente').value,cliente,dni:document.getElementById('f-dni').value,tel:document.getElementById('f-tel').value,dir:document.getElementById('f-dir-cli').value,pago:document.getElementById('f-pago').value,obs:document.getElementById('f-obs').value,lineas,base,cuotaIVA,total:round2(base+cuotaIVA)});
 }
 
 function htmlFactura(f) {
-  const dir = localStorage.getItem('gjg_cfg_dir') || 'Almería';
-  const contacto = localStorage.getItem('gjg_cfg_contacto') || '';
-  const fecFmt = f.fecha ? f.fecha.split('-').reverse().join('/') : '';
-  const E = getEmisor(f);
-  const lineasHtml = f.lineas.map(l => {
-    if (l.esBloque) return `
-      <tr style="background:#f0f4ff">
-        <td colspan="5" style="padding:0.4rem 0.5rem;font-size:0.72rem;font-weight:700;color:#1a3260;font-family:monospace;border-bottom:1px solid #c7d2fe">${l.desc}</td>
-      </tr>`;
-    return `<tr>
-        <td>${l.desc || '—'}</td>
-        <td class="td-num">${l.qty}</td>
-        <td class="td-num">${Number(l.precio).toLocaleString('es-ES',{minimumFractionDigits:2})} €</td>
-        <td class="td-num">${l.iva}%</td>
-        <td class="td-num">${round2(l.qty*l.precio).toLocaleString('es-ES',{minimumFractionDigits:2})} €</td>
-      </tr>`;
+  const dir=localStorage.getItem('gjg_cfg_dir')||'Almería', contacto=localStorage.getItem('gjg_cfg_contacto')||'';
+  const fecFmt=f.fecha?f.fecha.split('-').reverse().join('/'):'';
+  const E=getEmisor(f);
+  const lineasHtml=f.lineas.map(l=>{
+    if(l.esBloque) return `<tr style="background:#f0f4ff"><td colspan="5" style="padding:0.4rem 0.5rem;font-size:0.72rem;font-weight:700;color:#1a3260;font-family:monospace;border-bottom:1px solid #c7d2fe">${l.desc}</td></tr>`;
+    return `<tr><td>${l.desc||'—'}</td><td class="td-num">${l.qty}</td><td class="td-num">${Number(l.precio).toLocaleString('es-ES',{minimumFractionDigits:2})} €</td><td class="td-num">${l.iva}%</td><td class="td-num">${round2(l.qty*l.precio).toLocaleString('es-ES',{minimumFractionDigits:2})} €</td></tr>`;
   }).join('');
-  return `
-  <div class="factura-paper" id="factura-print">
+  return `<div class="factura-paper" id="factura-print">
     <div class="fact-header">
-      <div class="fact-emisor">
-        <h2>GESTORÍA<br>JUSTO GUEVARA</h2>
-        <p>${E.nombre}<br>NIF: ${E.nif}<br>${E.colegiado}<br>${E.colegio}<br>${dir} · ${contacto}</p>
-      </div>
+      <div class="fact-emisor"><h2>GESTORÍA<br>JUSTO GUEVARA</h2><p>${E.nombre}<br>NIF: ${E.nif}<br>${E.colegiado}<br>${E.colegio}<br>${dir} · ${contacto}</p></div>
       <div class="fact-num-box">
-        <div class="fact-serie">${f.numero || '—'}</div>
-        <p>${(f.estado === 'proforma' || (f.numero||'').startsWith('PRO')) ? '<span style="color:#d97706;font-weight:700">FACTURA PROFORMA</span>' : 'FACTURA'}</p>
+        <div class="fact-serie">${f.numero||'—'}</div>
+        <p>${(f.estado==='proforma'||(f.numero||'').startsWith('PRO'))?'<span style="color:#d97706;font-weight:700">FACTURA PROFORMA</span>':'FACTURA'}</p>
         <p>Fecha: <strong>${fecFmt}</strong></p>
-        ${f.expediente ? `<p>Exp: <strong>${f.expediente}</strong></p>` : ''}
+        ${f.expediente?`<p>Exp: <strong>${f.expediente}</strong></p>`:''}
       </div>
     </div>
     <div class="fact-partes">
       <div class="fact-parte"><h4>Emisor</h4><p><strong>${E.nombre}</strong><br>NIF: ${E.nif}<br>${dir}</p></div>
-      <div class="fact-parte"><h4>Cliente</h4><p><strong>${f.cliente}</strong><br>${f.dni ? 'NIF/NIE: ' + f.dni + '<br>' : ''}${f.tel ? 'Tel: ' + f.tel + '<br>' : ''}${f.dir ? f.dir : ''}</p></div>
+      <div class="fact-parte"><h4>Cliente</h4><p><strong>${f.cliente}</strong><br>${f.dni?'NIF/NIE: '+f.dni+'<br>':''}${f.tel?'Tel: '+f.tel+'<br>':''}${f.dir?f.dir:''}</p></div>
     </div>
-    <div class="fact-lineas">
-      <table>
-        <thead><tr><th>Concepto / Descripción</th><th style="text-align:right">Uds.</th><th style="text-align:right">Precio</th><th style="text-align:right">IVA</th><th style="text-align:right">Importe</th></tr></thead>
-        <tbody>${lineasHtml}</tbody>
-      </table>
-    </div>
-    <div class="fact-totales-box">
-      <div class="fact-totales-inner">
-        <div class="fact-tot-row"><span>Base imponible</span><span>${f.base.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
-        <div class="fact-tot-row"><span>IVA (21%)</span><span>${f.cuotaIVA.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
-        <div class="fact-tot-row grand"><span>TOTAL</span><span>${f.total.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
-      </div>
-    </div>
-    ${f.pago ? `<p style="margin-top:1rem;font-size:0.78rem;color:#555"><strong>Forma de pago:</strong> ${f.pago}</p>` : ''}
-    ${f.obs ? `<p style="margin-top:0.5rem;font-size:0.78rem;color:#555"><em>${f.obs}</em></p>` : ''}
-    <div class="fact-pie">
-      <div class="qr-placeholder">QR<br>VeriFactu<br>2027</div><br>
-      ${E.nombre} · NIF ${E.nif} · ${E.colegiado}<br>${E.colegio}<br>
-      <em>Factura emitida conforme a la normativa vigente. Conserve este documento para su declaración fiscal.</em>
-    </div>
+    <div class="fact-lineas"><table>
+      <thead><tr><th>Concepto / Descripción</th><th style="text-align:right">Uds.</th><th style="text-align:right">Precio</th><th style="text-align:right">IVA</th><th style="text-align:right">Importe</th></tr></thead>
+      <tbody>${lineasHtml}</tbody>
+    </table></div>
+    <div class="fact-totales-box"><div class="fact-totales-inner">
+      <div class="fact-tot-row"><span>Base imponible</span><span>${f.base.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
+      <div class="fact-tot-row"><span>IVA</span><span>${f.cuotaIVA.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
+      <div class="fact-tot-row grand"><span>TOTAL</span><span>${f.total.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
+    </div></div>
+    ${f.pago?`<p style="margin-top:1rem;font-size:0.78rem;color:#555"><strong>Forma de pago:</strong> ${f.pago}</p>`:''}
+    ${f.obs?`<p style="margin-top:0.5rem;font-size:0.78rem;color:#555"><em>${f.obs}</em></p>`:''}
+    <div class="fact-pie"><div class="qr-placeholder">QR<br>VeriFactu<br>2027</div><br>${E.nombre} · NIF ${E.nif} · ${E.colegiado}<br>${E.colegio}<br><em>Factura emitida conforme a la normativa vigente.</em></div>
   </div>`;
 }
 
-function mostrarPreview(f) {
-  document.getElementById('preview-content').innerHTML = htmlFactura(f);
-  document.getElementById('modal-preview').style.display = 'flex';
-}
-
-function cerrarPreview() { document.getElementById('modal-preview').style.display = 'none'; }
+function mostrarPreview(f) { document.getElementById('preview-content').innerHTML=htmlFactura(f); document.getElementById('modal-preview').style.display='flex'; }
+function cerrarPreview() { document.getElementById('modal-preview').style.display='none'; }
 
 function imprimirFactura() {
-  const contenido = document.getElementById('preview-content').innerHTML;
-  if (!contenido || contenido.trim() === '') { toast('No hay factura para imprimir', true); return; }
-  const css = document.querySelector('style').textContent;
-  const ventana = window.open('', '_blank', 'width=820,height=1000');
-  const html = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
-    + '<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">'
-    + '<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:sans-serif;padding:20px;background:white;}' + css
-    + '@media print{body{padding:0;}.factura-paper{box-shadow:none;}}</style></head><body>' + contenido + '</body></html>';
-  ventana.document.write(html);
-  ventana.document.close();
-  setTimeout(function(){ try{ ventana.focus(); ventana.print(); }catch(e){} }, 900);
+  const contenido=document.getElementById('preview-content').innerHTML; if(!contenido||contenido.trim()===''){toast('No hay factura para imprimir',true);return;}
+  const css=document.querySelector('style').textContent;
+  const ventana=window.open('','_blank','width=820,height=1000');
+  const html='<!DOCTYPE html><html><head><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:sans-serif;padding:20px;background:white;}'+css+'@media print{body{padding:0;}.factura-paper{box-shadow:none;}}</style></head><body>'+contenido+'</body></html>';
+  ventana.document.write(html); ventana.document.close();
+  setTimeout(function(){ try{ventana.focus();ventana.print();}catch(e){} },900);
 }
 
-// =============================================
-// LIMPIAR
-// =============================================
 function limpiarFormulario() {
-  document.getElementById('f-expediente').value = '';
-  document.getElementById('f-cliente').value = '';
-  document.getElementById('f-dni').value = '';
-  document.getElementById('f-tel').value = '';
-  document.getElementById('f-dir-cli').value = '';
-  document.getElementById('f-obs').value = '';
-  document.getElementById('f-fecha').value = hoy();
-  document.getElementById('lineas-body').innerHTML = '';
-  lineaId = 0;
-  expSeleccionado = null;
-  expsSeleccionados = [];
+  ['f-expediente','f-cliente','f-dni','f-tel','f-dir-cli','f-obs'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-fecha').value=hoy();
+  document.getElementById('lineas-body').innerHTML=''; lineaId=0;
+  expSeleccionado=null; expsSeleccionados=[];
   document.getElementById('multi-bar').classList.remove('visible');
-  addLinea('Honorarios por tramitación y gestión', '', 1, '21');
-  actualizarTotales();
-  actualizarSerie();
-  renderExpedientes();
+  addLinea('Honorarios por tramitación y gestión','',1,'21');
+  actualizarTotales(); actualizarSerie(); renderExpedientes();
 }
 
 // =============================================
 // DASHBOARD
 // =============================================
-const MESES_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-const MESES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-const TIPO_LABELS = { GE:'Escrituras', AS:'Fiscal', EX:'Extranjería', NA:'Nacionalidad', TR:'Tráfico', JU:'Jurídico' };
-
-let dashMesSel = new Date().getMonth();
+const MESES_ES=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const MESES_FULL=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const TIPO_LABELS={GE:'Escrituras',AS:'Fiscal',EX:'Extranjería',NA:'Nacionalidad',TR:'Tráfico',JU:'Jurídico'};
+let dashMesSel=new Date().getMonth();
 
 function renderDashboard() {
-  const anio = new Date().getFullYear();
-  document.getElementById('dash-anio').textContent = anio;
-  const soloEmitidas = facturas.filter(f => f.estado === 'emitida');
-  const proformas = facturas.filter(f => f.estado === 'proforma');
-  const totalFacturado = soloEmitidas.reduce((s,f) => s + (f.total||0), 0);
-  const totalCobrado   = soloEmitidas.filter(f => estaFacturaPagada(f)).reduce((s,f) => s + (f.total||0), 0);
-  const totalPendiente = totalFacturado - totalCobrado;
-  const kpis = [
-    { label:'Facturado este año', valor: fmtE(totalFacturado), color:'var(--navy)', icon:'🧾' },
-    { label:'Cobrado',            valor: fmtE(totalCobrado),   color:'var(--green)', icon:'✅' },
-    { label:'Pendiente de cobro', valor: fmtE(totalPendiente), color:'#c0392b',      icon:'🔴' },
-    { label:'Proformas abiertas', valor: proformas.length,     color:'#d97706',      icon:'📋' },
+  const anio=new Date().getFullYear(); document.getElementById('dash-anio').textContent=anio;
+  const soloEmitidas=facturas.filter(f=>f.estado==='emitida'), proformas=facturas.filter(f=>f.estado==='proforma');
+  const totalFacturado=soloEmitidas.reduce((s,f)=>s+(f.total||0),0);
+  const totalCobrado=soloEmitidas.filter(f=>estaFacturaPagada(f)).reduce((s,f)=>s+(f.total||0),0);
+  const totalPendiente=totalFacturado-totalCobrado;
+  const kpis=[
+    {label:'Facturado este año',valor:fmtE(totalFacturado),color:'var(--navy)',icon:'🧾'},
+    {label:'Cobrado',valor:fmtE(totalCobrado),color:'var(--green)',icon:'✅'},
+    {label:'Pendiente de cobro',valor:fmtE(totalPendiente),color:'#c0392b',icon:'🔴'},
+    {label:'Proformas abiertas',valor:proformas.length,color:'#d97706',icon:'📋'},
   ];
-  document.getElementById('kpi-grid').innerHTML = kpis.map(k => `
-    <div style="background:white;border-radius:12px;padding:1.25rem 1.5rem;box-shadow:var(--shadow);border-left:4px solid ${k.color}">
-      <div style="font-size:1.5rem;margin-bottom:0.25rem">${k.icon}</div>
-      <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray2);font-weight:600">${k.label}</div>
-      <div style="font-size:1.5rem;font-weight:700;color:${k.color};font-family:'DM Mono',monospace;margin-top:0.25rem">${k.valor}</div>
-    </div>
-  `).join('');
-
-  const porMes = Array(12).fill(0).map(() => ({ facturado:0, cobrado:0 }));
-  soloEmitidas.forEach(f => {
-    if (!f.fecha) return;
-    const d = new Date(f.fecha);
-    if (d.getFullYear() !== anio) return;
-    const m = d.getMonth();
-    porMes[m].facturado += f.total||0;
-    if (estaFacturaPagada(f)) porMes[m].cobrado += f.total||0;
-  });
-
-  const canvas = document.getElementById('chart-meses');
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.offsetWidth || 600;
-  canvas.height = 220;
-  const W = canvas.width, H = canvas.height;
-  const padL = 55, padR = 20, padT = 20, padB = 40;
-  const maxVal = Math.max(...porMes.map(m => m.facturado), 1);
-  const barW = (W - padL - padR) / 12;
-  ctx.clearRect(0,0,W,H);
-  ctx.strokeStyle = '#e8e5df'; ctx.lineWidth = 1;
-  for (let i=0; i<=4; i++) {
-    const y = padT + (H-padT-padB) * i/4;
-    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
-    ctx.fillStyle = '#b8b4ac'; ctx.font = '10px DM Sans,sans-serif'; ctx.textAlign = 'right';
-    ctx.fillText(fmtE(maxVal*(1-i/4)), padL-4, y+4);
-  }
-  porMes.forEach((m,i) => {
-    const x = padL + i*barW;
-    const hFact = m.facturado > 0 ? (m.facturado/maxVal)*(H-padT-padB) : 0;
-    const hCob  = m.cobrado   > 0 ? (m.cobrado/maxVal)*(H-padT-padB)   : 0;
-    const isSelected = i === dashMesSel;
-    ctx.fillStyle = isSelected ? '#0f1f3d' : '#93a8d4';
-    ctx.fillRect(x+barW*0.15, H-padB-hFact, barW*0.7, hFact);
-    ctx.fillStyle = isSelected ? '#1a7a4a' : '#6ee7b7';
-    ctx.fillRect(x+barW*0.15, H-padB-hCob, barW*0.7, hCob);
-    ctx.fillStyle = isSelected ? 'var(--navy)' : '#888';
-    ctx.font = isSelected ? 'bold 11px DM Sans,sans-serif' : '10px DM Sans,sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(MESES_ES[i], x+barW/2, H-padB+14);
-  });
-  ctx.font = '10px DM Sans,sans-serif';
-  ctx.fillStyle = '#93a8d4'; ctx.fillRect(padL,8,12,8);
-  ctx.fillStyle = '#555'; ctx.textAlign='left'; ctx.fillText('Facturado', padL+15, 16);
-  ctx.fillStyle = '#6ee7b7'; ctx.fillRect(padL+80,8,12,8);
-  ctx.fillStyle = '#555'; ctx.fillText('Cobrado', padL+95, 16);
-  canvas.onclick = function(e) {
-    const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX - rect.left) * (W / rect.width);
-    const mes = Math.floor((x - padL) / barW);
-    if (mes >= 0 && mes < 12) { dashMesSel = mes; renderDashboard(); }
-  };
-  canvas.style.cursor = 'pointer';
-
-  const porTipo = {};
-  soloEmitidas.forEach(f => {
-    if (!f.expediente) return;
-    const exp = expedientes.find(e => e.num === f.expediente);
-    const tipo = exp ? exp.tipo : (f.serie==='JU26'?'JU':'AS');
-    if (!porTipo[tipo]) porTipo[tipo] = { facturado:0, cobrado:0, n:0 };
-    porTipo[tipo].facturado += f.total||0; porTipo[tipo].n++;
-    if (estaFacturaPagada(f)) porTipo[tipo].cobrado += f.total||0;
-  });
-  const tipoHtml = Object.entries(porTipo).sort((a,b)=>b[1].facturado-a[1].facturado).map(([tipo,d]) => `
-    <div style="display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0;border-bottom:1px solid var(--gray)">
-      <span class="tipo-pill tipo-${tipo}" style="min-width:70px;text-align:center">${TIPO_LABELS[tipo]||tipo}</span>
-      <div style="flex:1">
-        <div style="font-size:0.78rem;font-weight:600">${fmtE(d.facturado)}</div>
-        <div style="font-size:0.68rem;color:var(--gray2)">${d.n} factura${d.n!==1?'s':''} · cobrado ${fmtE(d.cobrado)}</div>
-      </div>
-      <div style="width:60px;background:var(--gray);border-radius:4px;height:6px;overflow:hidden">
-        <div style="width:${d.facturado>0?Math.round(d.cobrado/d.facturado*100):0}%;background:var(--green);height:100%"></div>
-      </div>
-    </div>
-  `).join('') || '<div class="empty">Sin datos</div>';
-  document.getElementById('tabla-tipo').innerHTML = tipoHtml;
-
-  document.getElementById('dash-mes-label').textContent = '· ' + MESES_FULL[dashMesSel].toUpperCase();
-  const factMes = soloEmitidas.filter(f => {
-    if (!f.fecha) return false;
-    const d = new Date(f.fecha);
-    return d.getFullYear()===anio && d.getMonth()===dashMesSel;
-  }).sort((a,b) => new Date(b.fecha)-new Date(a.fecha));
-  document.getElementById('dash-fact-list').innerHTML = factMes.length ? factMes.map(f => `
-    <div class="fact-row">
-      <span class="fact-num">${f.numero}</span>
-      <span style="font-size:0.72rem;color:var(--gray2)">${f.fecha||''}</span>
-      <span class="fact-cliente">${f.cliente}</span>
-      <span style="font-size:0.72rem;color:var(--gray2)">${f.expediente||''}</span>
-      <span class="fact-importe">${fmtE(f.total)}</span>
-      ${estaFacturaPagada(f) ? '<span class="fact-estado estado-pagada">✅ Pagada</span>' : '<span class="fact-estado estado-pendiente">🔴 Pendiente</span>'}
-      <button class="btn btn-outline btn-sm" onclick="verFactura(${f.id})">👁️</button>
-    </div>
-  `).join('') : '<div class="empty"><div class="icon">🗓️</div>Sin facturas este mes</div>';
+  document.getElementById('kpi-grid').innerHTML=kpis.map(k=>`<div style="background:white;border-radius:12px;padding:1.25rem 1.5rem;box-shadow:var(--shadow);border-left:4px solid ${k.color}"><div style="font-size:1.5rem;margin-bottom:0.25rem">${k.icon}</div><div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray2);font-weight:600">${k.label}</div><div style="font-size:1.5rem;font-weight:700;color:${k.color};font-family:'DM Mono',monospace;margin-top:0.25rem">${k.valor}</div></div>`).join('');
+  const porMes=Array(12).fill(0).map(()=>({facturado:0,cobrado:0}));
+  soloEmitidas.forEach(f=>{if(!f.fecha)return;const d=new Date(f.fecha);if(d.getFullYear()!==anio)return;const m=d.getMonth();porMes[m].facturado+=f.total||0;if(estaFacturaPagada(f))porMes[m].cobrado+=f.total||0;});
+  const canvas=document.getElementById('chart-meses'),ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth||600;canvas.height=220;
+  const W=canvas.width,H=canvas.height,padL=55,padR=20,padT=20,padB=40;
+  const maxVal=Math.max(...porMes.map(m=>m.facturado),1),barW=(W-padL-padR)/12;
+  ctx.clearRect(0,0,W,H);ctx.strokeStyle='#e8e5df';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=padT+(H-padT-padB)*i/4;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();ctx.fillStyle='#b8b4ac';ctx.font='10px DM Sans,sans-serif';ctx.textAlign='right';ctx.fillText(fmtE(maxVal*(1-i/4)),padL-4,y+4);}
+  porMes.forEach((m,i)=>{const x=padL+i*barW,hFact=m.facturado>0?(m.facturado/maxVal)*(H-padT-padB):0,hCob=m.cobrado>0?(m.cobrado/maxVal)*(H-padT-padB):0,isSel=i===dashMesSel;
+    ctx.fillStyle=isSel?'#0f1f3d':'#93a8d4';ctx.fillRect(x+barW*0.15,H-padB-hFact,barW*0.7,hFact);
+    ctx.fillStyle=isSel?'#1a7a4a':'#6ee7b7';ctx.fillRect(x+barW*0.15,H-padB-hCob,barW*0.7,hCob);
+    ctx.fillStyle=isSel?'var(--navy)':'#888';ctx.font=isSel?'bold 11px DM Sans,sans-serif':'10px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(MESES_ES[i],x+barW/2,H-padB+14);});
+  canvas.onclick=function(e){const rect=canvas.getBoundingClientRect(),x=(e.clientX-rect.left)*(W/rect.width),mes=Math.floor((x-padL)/barW);if(mes>=0&&mes<12){dashMesSel=mes;renderDashboard();}};canvas.style.cursor='pointer';
+  const porTipo={};
+  soloEmitidas.forEach(f=>{if(!f.expediente)return;const exp=expedientes.find(e=>e.num===f.expediente),tipo=exp?exp.tipo:(f.serie==='JU26'?'JU':'AS');if(!porTipo[tipo])porTipo[tipo]={facturado:0,cobrado:0,n:0};porTipo[tipo].facturado+=f.total||0;porTipo[tipo].n++;if(estaFacturaPagada(f))porTipo[tipo].cobrado+=f.total||0;});
+  document.getElementById('tabla-tipo').innerHTML=Object.entries(porTipo).sort((a,b)=>b[1].facturado-a[1].facturado).map(([tipo,d])=>`<div style="display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0;border-bottom:1px solid var(--gray)"><span class="tipo-pill tipo-${tipo}" style="min-width:70px;text-align:center">${TIPO_LABELS[tipo]||tipo}</span><div style="flex:1"><div style="font-size:0.78rem;font-weight:600">${fmtE(d.facturado)}</div><div style="font-size:0.68rem;color:var(--gray2)">${d.n} factura${d.n!==1?'s':''} · cobrado ${fmtE(d.cobrado)}</div></div><div style="width:60px;background:var(--gray);border-radius:4px;height:6px;overflow:hidden"><div style="width:${d.facturado>0?Math.round(d.cobrado/d.facturado*100):0}%;background:var(--green);height:100%"></div></div></div>`).join('')||'<div class="empty">Sin datos</div>';
+  document.getElementById('dash-mes-label').textContent='· '+MESES_FULL[dashMesSel].toUpperCase();
+  const factMes=soloEmitidas.filter(f=>{if(!f.fecha)return false;const d=new Date(f.fecha);return d.getFullYear()===anio&&d.getMonth()===dashMesSel;}).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
+  document.getElementById('dash-fact-list').innerHTML=factMes.length?factMes.map(f=>`<div class="fact-row"><span class="fact-num">${f.numero}</span><span style="font-size:0.72rem;color:var(--gray2)">${f.fecha||''}</span><span class="fact-cliente">${f.cliente}</span><span style="font-size:0.72rem;color:var(--gray2)">${f.expediente||''}</span><span class="fact-importe">${fmtE(f.total)}</span>${estaFacturaPagada(f)?'<span class="fact-estado estado-pagada">✅ Pagada</span>':'<span class="fact-estado estado-pendiente">🔴 Pendiente</span>'}<button class="btn btn-outline btn-sm" onclick="verFactura(${f.id})">👁️</button></div>`).join(''):'<div class="empty"><div class="icon">🗓️</div>Sin facturas este mes</div>';
 }
 
-function fmtE(n) {
-  return Number(n||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
-}
+function fmtE(n) { return Number(n||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+async function refrescarPagos() { await cargarExpedientes(); renderFacturas(); toast('Pagos actualizados desde las apps'); }
 
-async function refrescarPagos() {
-  await cargarExpedientes();
-  renderFacturas();
-  toast('Pagos actualizados desde las apps');
-}
-
-// =============================================
-// EXPORTAR CSV
-// =============================================
 function exportarCSV() {
-  if (!facturas.length) { toast('No hay facturas para exportar', true); return; }
-  const cab = ['Nº Factura','Serie','Fecha','Expediente','Cliente','NIF Cliente','Forma Pago','Base Imponible','IVA','Total','Estado'];
-  const rows = facturas.map(f => [f.numero, f.serie, f.fecha, f.expediente||'', f.cliente, f.dni||'', f.pago||'', f.base, f.cuotaIVA, f.total, f.estado]);
-  const csv = [cab, ...rows].map(r => r.map(v => '"' + String(v).replace(/"/g,'""') + '"').join(',')).join('\n');
-  descargar('facturas_gjg.csv', csv, 'text/csv');
-  toast('📥 CSV descargado');
+  if (!facturas.length) { toast('No hay facturas para exportar',true); return; }
+  const cab=['Nº Factura','Serie','Fecha','Expediente','Cliente','NIF Cliente','Forma Pago','Base Imponible','IVA','Total','Estado'];
+  const rows=facturas.map(f=>[f.numero,f.serie,f.fecha,f.expediente||'',f.cliente,f.dni||'',f.pago||'',f.base,f.cuotaIVA,f.total,f.estado]);
+  const csv=[cab,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  descargar('facturas_gjg.csv',csv,'text/csv'); toast('📥 CSV descargado');
 }
 
 function getFiltradas() {
-  const desde = document.getElementById('vf-desde').value;
-  const hasta = document.getElementById('vf-hasta').value;
-  const serie = document.getElementById('vf-serie').value;
-  return facturas.filter(f => {
-    if (f.estado === 'anulada') return false;
-    if (desde && f.fecha < desde) return false;
-    if (hasta && f.fecha > hasta) return false;
-    if (serie && f.serie !== serie) return false;
-    return true;
-  });
+  const desde=document.getElementById('vf-desde').value,hasta=document.getElementById('vf-hasta').value,serie=document.getElementById('vf-serie').value;
+  return facturas.filter(f=>{if(f.estado==='anulada')return false;if(desde&&f.fecha<desde)return false;if(hasta&&f.fecha>hasta)return false;if(serie&&f.serie!==serie)return false;return true;});
 }
 
 function exportarVerifactuCSV() {
-  const ff = getFiltradas();
-  if (!ff.length) { toast('No hay facturas en el rango seleccionado', true); return; }
-  const E = EMISOR;
-  const cab = ['TipoFactura','Serie','NumeroFactura','FechaExpedicion','NIFEmisor','NombreEmisor','NIFDestinatario','NombreDestinatario','DescripcionOperacion','BaseImponible','TipoImpositivo','CuotaRepercutida','TotalFactura','FormaPago','ExpedienteVinculado'];
-  const rows = ff.map(f => ['F1', f.serie, f.numero, f.fecha, E.nif, E.nombre, f.dni||'', f.cliente, f.lineas.map(l=>l.desc).join(' | '), f.base, '21', f.cuotaIVA, f.total, f.pago||'Efectivo', f.expediente||'']);
-  const csv = [cab,...rows].map(r => r.map(v => '"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  descargar('verifactu_export.csv', csv, 'text/csv');
-  toast('📥 CSV VeriFactu descargado (' + ff.length + ' facturas)');
+  const ff=getFiltradas(); if(!ff.length){toast('No hay facturas en el rango seleccionado',true);return;}
+  const E=EMISOR;
+  const cab=['TipoFactura','Serie','NumeroFactura','FechaExpedicion','NIFEmisor','NombreEmisor','NIFDestinatario','NombreDestinatario','DescripcionOperacion','BaseImponible','TipoImpositivo','CuotaRepercutida','TotalFactura','FormaPago','ExpedienteVinculado'];
+  const rows=ff.map(f=>['F1',f.serie,f.numero,f.fecha,E.nif,E.nombre,f.dni||'',f.cliente,f.lineas.map(l=>l.desc).join(' | '),f.base,'21',f.cuotaIVA,f.total,f.pago||'Efectivo',f.expediente||'']);
+  const csv=[cab,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  descargar('verifactu_export.csv',csv,'text/csv'); toast('📥 CSV VeriFactu descargado ('+ff.length+' facturas)');
 }
 
 function exportarVerifactuXML() {
-  const ff = getFiltradas();
-  if (!ff.length) { toast('No hay facturas en el rango seleccionado', true); return; }
-  const E = EMISOR;
-  const registros = ff.map(f => `
-    <RegistroFacturacion>
-      <IDFactura><IDEmisorFactura>${E.nif}</IDEmisorFactura><NumSerieFactura>${f.numero}</NumSerieFactura><FechaExpedicionFactura>${f.fecha}</FechaExpedicionFactura></IDFactura>
-      <NombreRazonSocial>${E.nombre}</NombreRazonSocial>
-      <TipoFactura>F1</TipoFactura>
-      <DescripcionOperacion><![CDATA[${f.lineas.map(l=>l.desc).join(' | ')}]]></DescripcionOperacion>
-      <Destinatario><NIF>${f.dni||''}</NIF><NombreRazon><![CDATA[${f.cliente}]]></NombreRazon></Destinatario>
-      <Desglose><DetalleIVA><BaseImponible>${f.base.toFixed(2)}</BaseImponible><TipoImpositivo>21</TipoImpositivo><CuotaRepercutida>${f.cuotaIVA.toFixed(2)}</CuotaRepercutida></DetalleIVA></Desglose>
-      <ImporteTotal>${f.total.toFixed(2)}</ImporteTotal>
-    </RegistroFacturacion>`).join('\n');
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<RegistroFacturacion>\n  <Cabecera><ObligadoEmision><NombreRazon>${E.nombre}</NombreRazon><NIF>${E.nif}</NIF></ObligadoEmision></Cabecera>\n  <RegistrosFacturacion>${registros}\n  </RegistrosFacturacion>\n</RegistroFacturacion>`;
-  descargar('verifactu_' + new Date().toISOString().slice(0,10) + '.xml', xml, 'application/xml');
-  toast('📄 XML VeriFactu descargado (' + ff.length + ' facturas)');
+  const ff=getFiltradas(); if(!ff.length){toast('No hay facturas en el rango seleccionado',true);return;}
+  const E=EMISOR;
+  const registros=ff.map(f=>`<RegistroFacturacion><IDFactura><IDEmisorFactura>${E.nif}</IDEmisorFactura><NumSerieFactura>${f.numero}</NumSerieFactura><FechaExpedicionFactura>${f.fecha}</FechaExpedicionFactura></IDFactura><NombreRazonSocial>${E.nombre}</NombreRazonSocial><TipoFactura>F1</TipoFactura><DescripcionOperacion><![CDATA[${f.lineas.map(l=>l.desc).join(' | ')}]]></DescripcionOperacion><Destinatario><NIF>${f.dni||''}</NIF><NombreRazon><![CDATA[${f.cliente}]]></NombreRazon></Destinatario><Desglose><DetalleIVA><BaseImponible>${f.base.toFixed(2)}</BaseImponible><TipoImpositivo>21</TipoImpositivo><CuotaRepercutida>${f.cuotaIVA.toFixed(2)}</CuotaRepercutida></DetalleIVA></Desglose><ImporteTotal>${f.total.toFixed(2)}</ImporteTotal></RegistroFacturacion>`).join('\n');
+  const xml=`<?xml version="1.0" encoding="UTF-8"?>\n<RegistroFacturacion>\n<Cabecera><ObligadoEmision><NombreRazon>${E.nombre}</NombreRazon><NIF>${E.nif}</NIF></ObligadoEmision></Cabecera>\n<RegistrosFacturacion>${registros}</RegistrosFacturacion>\n</RegistroFacturacion>`;
+  descargar('verifactu_'+new Date().toISOString().slice(0,10)+'.xml',xml,'application/xml'); toast('📄 XML VeriFactu descargado ('+ff.length+' facturas)');
 }
 
-function descargar(nombre, contenido, tipo) {
-  const blob = new Blob([contenido], {type: tipo});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = nombre;
-  a.click();
-}
+function descargar(nombre,contenido,tipo) { const blob=new Blob([contenido],{type:tipo}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nombre;a.click(); }
 
 let toastTimer;
-function toast(msg, error = false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = error ? '#c0392b' : 'var(--navy)';
-  t.style.display = 'flex';
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.style.display = 'none', 3000);
+function toast(msg,error=false) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.style.background=error?'#c0392b':'var(--navy)'; t.style.display='flex';
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.style.display='none',3000);
 }
 
 // ═══ CLIENTESMAESTRO ══════════════════════════════════════════════════════
-const URL_MAESTRO = 'https://script.google.com/macros/s/AKfycbyVXypuTXm5tRvbP-xJu06q7ZsJ2qve790lCyvBLJpr6jTckZhc6wZ4kX5XPhVOWCVrww/exec';
+// URL cargada desde config central al arrancar
 
 async function buscarEnMaestro(dni) {
-  if (!dni || dni.length < 7) return null;
+  if (!URL_MAESTRO||!dni||dni.length<7) return null;
   try {
-    const r = await fetch(URL_MAESTRO + '?action=buscar&dni=' + encodeURIComponent(dni.toUpperCase().replace(/-/g,'')));
-    const d = await r.json();
-    if (d && d.encontrado) return d.cliente;
+    const r=await fetch(URL_MAESTRO+'?action=buscar&dni='+encodeURIComponent(dni.toUpperCase().replace(/-/g,'')));
+    const d=await r.json(); if(d&&d.encontrado) return d.cliente;
   } catch(e) {}
   return null;
 }
 
 async function rellenarDesdeMaestroFAC() {
-  const dni = (document.getElementById('f-dni')?.value||'').trim();
-  const st  = document.getElementById('mst-fac');
-  if (!dni || dni.length < 7) { if(st) st.textContent='⚠ Escribe el NIF/NIE primero'; return; }
+  const dni=(document.getElementById('f-dni')?.value||'').trim();
+  const st=document.getElementById('mst-fac');
+  if (!dni||dni.length<7) { if(st) st.textContent='⚠ Escribe el NIF/NIE primero'; return; }
   if(st) st.textContent='🔍 Buscando...';
-  const cli = await buscarEnMaestro(dni);
+  const cli=await buscarEnMaestro(dni);
   if (!cli) { if(st) st.textContent='❌ No encontrado en Maestro'; return; }
-  const set = (id, val) => { const el=document.getElementById(id); if(el && val) el.value=val; };
-  const nombre = cli.Razon_Social || [cli.Nombre, cli.Apellido1, cli.Apellido2].filter(Boolean).join(' ');
-  set('f-cliente', nombre);
-  set('f-tel', cli.Telefono1 || '');
-  const dir = [cli.Tipo_Via, cli.Nombre_Via, cli.Numero, cli.CP, cli.Municipio, cli.Provincia]
-    .filter(v => v && String(v) !== 'None' && String(v).trim() !== '').join(' ');
-  set('f-dir-cli', dir);
+  const set=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
+  const nombre=cli.Razon_Social||[cli.Nombre,cli.Apellido1,cli.Apellido2].filter(Boolean).join(' ');
+  set('f-cliente',nombre); set('f-tel',cli.Telefono1||'');
+  const dir=[cli.Tipo_Via,cli.Nombre_Via,cli.Numero,cli.CP,cli.Municipio,cli.Provincia].filter(v=>v&&String(v)!=='None'&&String(v).trim()!=='').join(' ');
+  set('f-dir-cli',dir);
   if(st) st.textContent='✅ Datos cargados desde Maestro';
 }
 </script>
