@@ -680,13 +680,14 @@ async function cargarExpedientes() {
     try {
       const r = await fetch(urlFis + '?action=leer&hoja=FiscalExp', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
+      if (d && (d.datos||d.success) && (d.datos||[]).length > 1) {
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
-          const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
+          // Fiscal usa campo 'numero', no 'numExp'
+          const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
           if (expedientes.find(e => e.num===num)) return;
-          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.nie||obj.dni||'', gestion:obj.gestion||'', tipo:'AS', totalExp:obj.importeTotal||obj.honorarios||'', fuente:'fiscal', raw:obj });
+          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.asunto||obj.tipo||'FISCAL', tipo:'AS', totalExp:obj.total||obj.cobrado||'', fuente:'fiscal', raw:obj });
         });
       }
     } catch(e) { console.warn('Error Fiscal:', e); }
@@ -713,14 +714,16 @@ async function cargarExpedientes() {
 
   if (urlTra) {
     try {
-      const r = await fetch(urlTra + '?action=leer&hoja=EXPEDIENTES', {redirect:'follow'});
+      const r = await fetch(urlTra + '?action=leer&hoja=Facturacion', {redirect:'follow'});
       const d = await r.json();
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
           const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
           if (expedientes.find(e => e.num===num)) return;
+          // Excluir filas sin cliente
+          if (!obj.cliente) return;
           expedientes.push({ num, cliente:obj.cliente||'', dni:obj.dni||'', gestion:obj.tipo||'TRÁFICO', tipo:'TR', totalExp:obj.totalFactura||'', fuente:'trafico', raw:obj });
         });
       }
@@ -729,7 +732,7 @@ async function cargarExpedientes() {
 
   if (urlJu) {
     try {
-      const r = await fetch(urlJu + '?action=leer&hoja=EXPEDIENTES', {redirect:'follow'});
+      const r = await fetch(urlJu + '?action=leer&hoja=ExpedientesJ', {redirect:'follow'});
       const d = await r.json();
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
