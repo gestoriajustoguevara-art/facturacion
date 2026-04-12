@@ -735,7 +735,7 @@ async function cargarExpedientes() {
         const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
         if (expedientes.find(e => e.num===num)) return;
         if (!obj.cliente) return;
-        expedientes.push({ num, cliente:obj.cliente||'', dni:obj.dni||'', gestion:obj.tipo||'TRÁFICO', tipo:'TR', totalExp:obj.totalFactura||'', fuente:'trafico', raw:obj });
+        expedientes.push({ num, cliente:obj.nombreComprador||obj.cliente||'', dni:obj.dniComprador||obj.dniVendedor||obj.dni||'', gestion:obj.tipo||'TRÁFICO', tipo:'TR', totalExp:obj.totalFactura||'', fuente:'trafico', raw:obj });
       });
     } catch(e) { console.warn('Error Tráfico:', e); }
   }
@@ -847,6 +847,21 @@ function toggleSeleccionMulti(event, num) {
       const dir = raw.dir || raw.direccion || raw.domicilio || (raw.tipoVia ? [raw.tipoVia||'', raw.nombreVia||'', raw.numeroCalle||'', raw.cp||'', raw.municipio||''].filter(Boolean).join(' ').trim() : '');
       document.getElementById('f-dir-cli').value = dir;
       actualizarSerie();
+      // Si no hay DNI, buscar automáticamente en MAESTRO por nombre
+      const dniActual = document.getElementById('f-dni').value.trim();
+      if (!dniActual && expSeleccionado.cliente) {
+        const st = document.getElementById('mst-fac');
+        if (st) st.textContent = '🔍 Buscando en Maestro...';
+        buscarEnMaestroPorNombre(expSeleccionado.cliente).then(cli => {
+          if (!cli) { if(st) st.textContent = ''; return; }
+          const setF = (id, val) => { const el=document.getElementById(id); if(el && val) el.value=val; };
+          setF('f-dni', cli.DNI_NIE || '');
+          setF('f-tel', cli.Telefono1 || '');
+          const dirM = [cli.Tipo_Via, cli.Nombre_Via, cli.Numero, cli.CP, cli.Municipio].filter(v=>v&&String(v).trim()&&String(v)!=='None').join(' ');
+          setF('f-dir-cli', dirM);
+          if(st) st.textContent = '✅ Datos cargados desde Maestro';
+        });
+      }
     }
   }
   renderExpedientes();
@@ -1424,6 +1439,16 @@ async function buscarEnMaestro(dni) {
   if (!URL_MAESTRO || !dni || dni.length < 7) return null;
   try {
     const r = await fetch(URL_MAESTRO + '?action=buscar&dni=' + encodeURIComponent(dni.toUpperCase().replace(/-/g,'')));
+    const d = await r.json();
+    if (d && d.encontrado) return d.cliente;
+  } catch(e) {}
+  return null;
+}
+
+async function buscarEnMaestroPorNombre(nombre) {
+  if (!URL_MAESTRO || !nombre || nombre.length < 3) return null;
+  try {
+    const r = await fetch(URL_MAESTRO + '?action=buscar&nombre=' + encodeURIComponent(nombre.trim()));
     const d = await r.json();
     if (d && d.encontrado) return d.cliente;
   } catch(e) {}
