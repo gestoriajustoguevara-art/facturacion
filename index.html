@@ -185,8 +185,9 @@ main { max-width: 1280px; margin: 0 auto; padding: 1.5rem; display: grid; grid-t
           <button class="tab" onclick="filtrarTipo('TR',event)">Tráfico</button>
         </div>
         <div style="display:flex;gap:0.4rem;margin-bottom:0.5rem">
-          <button id="btn-pendientes" class="btn btn-primary btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado(true)">⏳ Sin facturar</button>
-          <button id="btn-todos" class="btn btn-outline btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado(false)">📋 Todos</button>
+          <button id="btn-pendientes" class="btn btn-primary btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado('sin')">⏳ Sin facturar</button>
+          <button id="btn-listos" class="btn btn-outline btn-sm" style="flex:1;font-size:0.72rem;background:#ede9fe;color:#6d28d9;border-color:#c4b5fd" onclick="toggleFiltroFacturado('listo')">🔵 Listos</button>
+          <button id="btn-todos" class="btn btn-outline btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado('todos')">📋 Todos</button>
         </div>
         <div class="field" style="margin-bottom:0.5rem">
           <input type="text" placeholder="🔍 Buscar cliente…" id="buscador" oninput="filtrarBuscar()">
@@ -406,7 +407,7 @@ let facturas             = JSON.parse(localStorage.getItem('gjg_facturas') || '[
 let lineaId              = 0;
 let expSeleccionado      = null;
 let expsSeleccionados    = [];
-let soloSinFacturar      = true;
+let modoFiltroFac        = 'sin'; // 'sin' | 'listo' | 'todos'
 let tipoFiltro           = 'TODOS';
 let contadorAS           = parseInt(localStorage.getItem('gjg_cnt_AS') || '0');
 let contadorJU           = parseInt(localStorage.getItem('gjg_cnt_JU') || '0');
@@ -767,7 +768,8 @@ function renderExpedientes() {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.2rem">
         <span class="exp-num">${e.num}</span>
-        ${yaFact?'<span style="font-size:0.6rem;background:#dcfce7;color:#166534;padding:1px 5px;border-radius:10px;font-weight:600">✅ Facturado</span>':''}
+        ${yaFact?'<span style="font-size:0.6rem;background:#dcfce7;color:#166534;padding:1px 5px;border-radius:10px;font-weight:600">✅ Facturado</span>':
+          (() => { const ef=String(e.raw?.estadoFactura||e.raw?.facturacion||'').toLowerCase(); return (ef==='listo'||ef==='pte_facturar')?'<span style="font-size:0.6rem;background:#ede9fe;color:#6d28d9;padding:1px 5px;border-radius:10px;font-weight:600">🔵 Listo</span>':''; })()}
       </div>
     </div>`;
   }).join('');
@@ -785,7 +787,13 @@ function filtrarBuscar() {
   expedientesFiltrados = expedientes.filter(e => {
     const matchTipo = tipoFiltro === 'TODOS' || e.tipo === tipoFiltro;
     const matchQ = !q || e.cliente.toLowerCase().includes(q) || e.num.toLowerCase().includes(q) || (e.dni||'').toLowerCase().includes(q);
-    const matchFact = !soloSinFacturar || !expYaFacturado(e.num);
+    const efRaw = String(e.raw?.estadoFactura || e.raw?.facturacion || '').toLowerCase();
+    const esListo = efRaw === 'listo' || efRaw === 'pte_facturar';
+    const matchFact = modoFiltroFac === 'todos'
+      ? true
+      : modoFiltroFac === 'listo'
+        ? esListo && !expYaFacturado(e.num)
+        : !expYaFacturado(e.num);  // 'sin' = todos sin facturar
     return matchTipo && matchQ && matchFact;
   });
   renderExpedientes();
@@ -853,12 +861,25 @@ function expYaFacturado(num) {
   });
 }
 
-function toggleFiltroFacturado(soloSin) {
-  soloSinFacturar = soloSin;
-  document.getElementById('btn-pendientes').className = (soloSin ? 'btn btn-primary' : 'btn btn-outline') + ' btn-sm';
+function toggleFiltroFacturado(modo) {
+  modoFiltroFac = modo;
+  // Resetear todos
+  document.getElementById('btn-pendientes').className = 'btn btn-outline btn-sm';
   document.getElementById('btn-pendientes').style.cssText = 'flex:1;font-size:0.72rem';
-  document.getElementById('btn-todos').className = (soloSin ? 'btn btn-outline' : 'btn btn-primary') + ' btn-sm';
+  const btnL = document.getElementById('btn-listos');
+  if (btnL) { btnL.className = 'btn btn-outline btn-sm'; btnL.style.cssText = 'flex:1;font-size:0.72rem;background:#ede9fe;color:#6d28d9;border-color:#c4b5fd'; }
+  document.getElementById('btn-todos').className = 'btn btn-outline btn-sm';
   document.getElementById('btn-todos').style.cssText = 'flex:1;font-size:0.72rem';
+  // Activar el seleccionado
+  if (modo === 'sin') {
+    document.getElementById('btn-pendientes').className = 'btn btn-primary btn-sm';
+    document.getElementById('btn-pendientes').style.cssText = 'flex:1;font-size:0.72rem';
+  } else if (modo === 'listo') {
+    if (btnL) { btnL.style.cssText = 'flex:1;font-size:0.72rem;background:#7c3aed;color:white;border-color:#7c3aed'; }
+  } else {
+    document.getElementById('btn-todos').className = 'btn btn-primary btn-sm';
+    document.getElementById('btn-todos').style.cssText = 'flex:1;font-size:0.72rem';
+  }
   filtrarBuscar();
 }
 
