@@ -741,9 +741,10 @@ async function cargarExpedientes() {
       if (rawJu && rawJu.length > 1) {
         const [cab, ...rows] = rawJu;
         rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
-          const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
-          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.gestion||'', tipo:'JU', totalExp:obj.honorarios||obj.importeTotal||'', fuente:'juridico', raw:obj });
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
+          const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
+          if (expedientes.find(e => e.num===num)) return;
+          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.asunto||obj.gestion||'', tipo:'JU', totalExp:obj.cuantia||'', fuente:'juridico', raw:obj });
         });
       }
     } catch(e) { console.warn('Error Jurídico:', e); }
