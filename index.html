@@ -649,13 +649,26 @@ async function cargarExpedientes() {
 
   if (urlEsc) {
     try {
-      const r = await fetch(urlEsc + '?action=leer&hoja=CLIENTES');
+      const r = await fetch(urlEsc + '?action=leer&hoja=CLIENTES', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
+      // Escrituras devuelve {status:'ok', clis:[...]} o {success:true, datos:[[...]]}
+      let escRows = [];
+      if (d && d.clis && d.clis.length) {
+        // Formato nativo Escrituras: array de objetos directamente
+        escRows = d.clis;
+        escRows.forEach(obj => {
+          const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
+          if (expedientes.find(e => e.num===num)) return;
+          const tipo = num.startsWith('GE')?'GE':num.startsWith('AS')?'AS':num.startsWith('EX')?'EX':'GE';
+          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.gestion||'', tipo, totalExp:obj.totalExp||'', fuente:'escrituras', raw:obj });
+        });
+      } else if (d && d.datos && d.datos.length > 1) {
+        // Formato estándar con cabeceras
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
           const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
           const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
+          if (expedientes.find(e => e.num===num)) return;
           const tipo = num.startsWith('GE')?'GE':num.startsWith('AS')?'AS':num.startsWith('EX')?'EX':'GE';
           expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.gestion||'', tipo, totalExp:obj.totalExp||'', fuente:'escrituras', raw:obj });
         });
@@ -665,7 +678,7 @@ async function cargarExpedientes() {
 
   if (urlFis) {
     try {
-      const r = await fetch(urlFis + '?action=leer&hoja=FiscalExp');
+      const r = await fetch(urlFis + '?action=leer&hoja=FiscalExp', {redirect:'follow'});
       const d = await r.json();
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
@@ -681,7 +694,7 @@ async function cargarExpedientes() {
 
   if (urlExt) {
     try {
-      const r = await fetch(urlExt + '?action=leer&hoja=ExtranjeriaExp');
+      const r = await fetch(urlExt + '?action=leer&hoja=ExtranjeriaExp', {redirect:'follow'});
       const d = await r.json();
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
@@ -700,7 +713,7 @@ async function cargarExpedientes() {
 
   if (urlTra) {
     try {
-      const r = await fetch(urlTra + '?action=leer&hoja=EXPEDIENTES');
+      const r = await fetch(urlTra + '?action=leer&hoja=EXPEDIENTES', {redirect:'follow'});
       const d = await r.json();
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
@@ -716,7 +729,7 @@ async function cargarExpedientes() {
 
   if (urlJu) {
     try {
-      const r = await fetch(urlJu + '?action=leer&hoja=EXPEDIENTES');
+      const r = await fetch(urlJu + '?action=leer&hoja=EXPEDIENTES', {redirect:'follow'});
       const d = await r.json();
       if (d && d.datos && d.datos.length > 1) {
         const [cab, ...rows] = d.datos;
@@ -1062,6 +1075,8 @@ async function guardarFacturaFinal() {
   // Subir a Sheets
   await subirFacturaASheets(fact);
   await subirContadoresASheets();
+  // Actualizar estadoFactura = 'facturado' en las apps de origen
+  await actualizarEstadoFacturadoEnApps(fact.expediente);
 }
 
 function editarProforma(id) {
@@ -1406,6 +1421,59 @@ function toast(msg, error = false) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.style.background = error ? '#c0392b' : 'var(--navy)'; t.style.display = 'flex';
   clearTimeout(toastTimer); toastTimer = setTimeout(() => t.style.display = 'none', 3500);
+}
+
+// ═══ ACTUALIZAR ESTADO FACTURADO EN APPS DE ORIGEN ══════════
+// Se llama al emitir factura. Recorre los expedientes de la factura
+// y manda POST a la app correspondiente para marcar estadoFactura='facturado'
+async function actualizarEstadoFacturadoEnApps(expedienteField) {
+  if (!expedienteField) return;
+  const nums = expedienteField.split(',').map(s => s.trim()).filter(Boolean);
+  if (!nums.length) return;
+
+  const urlEsc = document.getElementById('cfg-url-esc')?.value.trim();
+  const urlFis = document.getElementById('cfg-url-fis')?.value.trim();
+  const urlExt = document.getElementById('cfg-url-ext')?.value.trim();
+  const urlTra = document.getElementById('cfg-url-tra')?.value.trim();
+  const urlJu  = document.getElementById('cfg-url-ju')?.value.trim();
+
+  // Mapa de prefijo → {url, hoja, campo}
+  const mapa = [
+    { prefijos: ['GE'], url: urlEsc, hoja: 'CLIENTES',      campo: 'estadoFactura' },
+    { prefijos: ['AS'], url: urlFis, hoja: 'FiscalExp',     campo: 'facturacion'   },
+    { prefijos: ['EX','NA'], url: urlExt, hoja: 'ExtranjeriaExp', campo: 'estadoFactura' },
+    { prefijos: ['F'],  url: urlTra, hoja: 'EXPEDIENTES',   campo: 'estadoFactura' },
+    { prefijos: ['JU'], url: urlJu,  hoja: 'ExpedientesJ',  campo: 'estadoFactura' },
+  ];
+
+  for (const num of nums) {
+    // Buscar el exp en memoria para saber su fuente
+    const exp = expedientes.find(e => e.num === num);
+    if (!exp) continue;
+
+    const entrada = mapa.find(m => m.prefijos.some(p => num.startsWith(p)));
+    if (!entrada || !entrada.url) continue;
+
+    try {
+      await fetch(entrada.url, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({
+          action: 'actualizarCampo',
+          hoja: entrada.hoja,
+          numExp: num,
+          campo: entrada.campo,
+          valor: entrada.campo === 'facturacion' ? 'facturado' : 'facturado'
+        })
+      });
+      console.log('✅ Marcado como facturado:', num);
+    } catch(e) {
+      console.warn('Error actualizando', num, e);
+    }
+  }
+
+  // Refrescar la lista de expedientes para reflejar el nuevo estado
+  setTimeout(() => cargarExpedientes(), 1500);
 }
 </script>
 </body>
