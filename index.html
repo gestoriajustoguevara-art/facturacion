@@ -697,10 +697,12 @@ async function cargarExpedientes() {
     try {
       const r = await fetch(urlExt + '?action=leer&hoja=ExtranjeriaExp', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
-        const [cab, ...rows] = d.datos;
+      // Extranjería puede devolver array directo [[cab],[f1],...] o {datos:[[cab],[f1],...]}
+      const rawArr = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
+      if (rawArr && rawArr.length > 1) {
+        const [cab, ...rows] = rawArr;
         rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
           const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
           if (expedientes.find(e => e.num===num)) return;
           const tipoE = num.startsWith('NA')?'NA':'EX';
@@ -716,8 +718,9 @@ async function cargarExpedientes() {
     try {
       const r = await fetch(urlTra + '?action=leer&hoja=Facturacion', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
-        const [cab, ...rows] = d.datos;
+      const rawTra = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
+      if (rawTra && rawTra.length > 1) {
+        const [cab, ...rows] = rawTra;
         rows.forEach(row => {
           const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
           const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
@@ -734,8 +737,9 @@ async function cargarExpedientes() {
     try {
       const r = await fetch(urlJu + '?action=leer&hoja=ExpedientesJ', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
-        const [cab, ...rows] = d.datos;
+      const rawJu = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
+      if (rawJu && rawJu.length > 1) {
+        const [cab, ...rows] = rawJu;
         rows.forEach(row => {
           const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
           const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
