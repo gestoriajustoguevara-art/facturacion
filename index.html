@@ -844,7 +844,7 @@ function toggleSeleccionMulti(event, num) {
       document.getElementById('f-dni').value = expSeleccionado.dniTitular || expSeleccionado.dni || raw.dni || raw.nie || raw.dniTitular || '';
       document.getElementById('f-tel').value = raw.telefono || raw.tel || raw.telCliente || '';
       // Dirección: intentar componer desde campos disponibles
-      const dir = raw.dir || raw.direccion || [raw.tipoVia||'', raw.nombreVia||'', raw.numero||'', raw.cp||'', raw.municipio||raw.localidad||''].filter(Boolean).join(' ').trim();
+      const dir = raw.dir || raw.direccion || raw.domicilio || (raw.tipoVia ? [raw.tipoVia||'', raw.nombreVia||'', raw.numeroCalle||'', raw.cp||'', raw.municipio||''].filter(Boolean).join(' ').trim() : '');
       document.getElementById('f-dir-cli').value = dir;
       actualizarSerie();
     }
@@ -861,7 +861,7 @@ function cargarMulti() {
     const rawP = primero.raw || {};
     document.getElementById('f-dni').value = primero.dniTitular || primero.dni || rawP.dni || rawP.nie || rawP.dniTitular || '';
     document.getElementById('f-tel').value = rawP.telefono || rawP.tel || rawP.telCliente || '';
-    const dirP = rawP.dir || rawP.direccion || [rawP.tipoVia||'', rawP.nombreVia||'', rawP.numero||'', rawP.cp||'', rawP.municipio||rawP.localidad||''].filter(Boolean).join(' ').trim();
+    const dirP = rawP.dir || rawP.direccion || rawP.domicilio || (rawP.tipoVia ? [rawP.tipoVia||'', rawP.nombreVia||'', rawP.numeroCalle||'', rawP.cp||'', rawP.municipio||''].filter(Boolean).join(' ').trim() : '');
     document.getElementById('f-dir-cli').value = dirP;
     expSeleccionado = primero; actualizarSerie();
   }
@@ -952,10 +952,13 @@ function extraerLineasExpediente(exp) {
     if (total > 0 && honorarios <= 0) addL('Honorarios gestoría · ' + gestion, total);
   } else if (exp.tipo === 'AS') {
     // Fiscal: campos cobrado/total/base según lo que venga
-    const honAS = parseFloat(String(d.honorarios||d.base||d.cobrado||d.total||d.importeTotal||d.totalExp||0).replace(',','.'))||0;
-    if (honAS > 0) addL('Honorarios asesoría fiscal · ' + gestion, honAS);
-    else addL('Honorarios asesoría fiscal · ' + gestion, 0);
-    addS('Tasas / suplidos', d.tasas || d.suplidos || d.totalTasas || d.cuotaIVA);
+    // Fiscal: el campo 'total' es el total de la factura incluyendo IVA
+    // El campo 'cobrado' es lo que han pagado, 'base' es la base imponible
+    const honAS = parseFloat(String(d.base||d.honorarios||d.cobrado||d.total||d.importeTotal||0).replace(',','.').replace(/[^0-9.-]/g,''))||0;
+    const supAS = parseFloat(String(d.tasas||d.suplidos||d.totalTasas||0).replace(',','.'))||0;
+    if (honAS > 0) addL('Honorarios asesoría fiscal · ' + (gestion||d.asunto||d.tipo||''), honAS);
+    else addL('Honorarios asesoría fiscal · ' + (gestion||d.asunto||d.tipo||''), 0);
+    if (supAS > 0) addS('Tasas / suplidos', supAS);
   } else if (exp.tipo === 'TR') {
     const honTR = parseFloat(String(d.honorarios).replace(',','.'))||0;
     const tasaTR = parseFloat(String(d.tasaTrafico).replace(',','.'))||0;
