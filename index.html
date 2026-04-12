@@ -718,18 +718,25 @@ async function cargarExpedientes() {
     try {
       const r = await fetch(urlTra + '?action=leer&hoja=Facturacion', {redirect:'follow'});
       const d = await r.json();
-      const rawTra = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
-      if (rawTra && rawTra.length > 1) {
-        const [cab, ...rows] = rawTra;
-        rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
-          const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
-          if (expedientes.find(e => e.num===num)) return;
-          // Excluir filas sin cliente
-          if (!obj.cliente) return;
-          expedientes.push({ num, cliente:obj.cliente||'', dni:obj.dni||'', gestion:obj.tipo||'TRÁFICO', tipo:'TR', totalExp:obj.totalFactura||'', fuente:'trafico', raw:obj });
-        });
+      // Tráfico devuelve array de objetos directos [{id,numero,cliente,...}]
+      // o array de arrays [[cab],[fila1],...] o {datos:[[cab],[fila1],...]}
+      let traList = [];
+      if (Array.isArray(d) && d.length && typeof d[0] === 'object' && !Array.isArray(d[0])) {
+        // Array de objetos directos
+        traList = d;
+      } else {
+        const rawTra = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
+        if (rawTra && rawTra.length > 1) {
+          const [cab, ...rows] = rawTra;
+          traList = rows.map(row => { const o={}; cab.forEach((c,i)=>o[c]=row[i]!==undefined?String(row[i]):''); return o; });
+        }
       }
+      traList.forEach(obj => {
+        const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
+        if (expedientes.find(e => e.num===num)) return;
+        if (!obj.cliente) return;
+        expedientes.push({ num, cliente:obj.cliente||'', dni:obj.dni||'', gestion:obj.tipo||'TRÁFICO', tipo:'TR', totalExp:obj.totalFactura||'', fuente:'trafico', raw:obj });
+      });
     } catch(e) { console.warn('Error Tráfico:', e); }
   }
 
