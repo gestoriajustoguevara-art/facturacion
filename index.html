@@ -223,7 +223,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 1.5rem; display: grid; grid-t
   <div class="panel">
     <div class="panel-head">
       🧾 REDACTAR FACTURA
-      <span class="badge" id="badge-serie" style="font-size:0.85rem;padding:2px 12px">AS26/—</span>
+      <span class="badge" id="badge-serie" style="font-size:0.85rem;padding:2px 12px">/—</span>
     </div>
     <div class="panel-body">
       <div class="form-section">
@@ -311,7 +311,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 1.5rem; display: grid; grid-t
         <input type="text" id="busq-fact" placeholder="🔍 Buscar…" oninput="renderFacturas()" style="border:1.5px solid var(--gray);border-radius:7px;padding:0.4rem 0.7rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;width:220px">
         <select id="filtro-serie" onchange="renderFacturas()" style="border:1.5px solid var(--gray);border-radius:7px;padding:0.4rem 0.7rem;font-family:'DM Sans',sans-serif;font-size:0.82rem">
           <option value="">Todas las series</option>
-          <option value="AS26">AS26 (General)</option>
+          <option value=""> (General)</option>
           <option value="JU26">JU26 (Jurídico)</option>
           <option value="PRO">Proformas</option>
         </select>
@@ -340,7 +340,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 1.5rem; display: grid; grid-t
             <div class="field"><label>Hasta fecha</label><input type="date" id="vf-hasta"></div>
           </div>
           <div class="field"><label>Serie</label>
-            <select id="vf-serie"><option value="">Todas</option><option value="AS26">AS26</option><option value="JU26">JU26</option></select>
+            <select id="vf-serie"><option value="">Todas</option><option value=""></option><option value="JU26">JU26</option></select>
           </div>
         </div>
         <div class="btn-row">
@@ -470,7 +470,7 @@ async function subirContadoresASheets() {
     fetch(URL_FACT, {
       method: 'POST',
       mode: 'no-cors',
-      body: JSON.stringify({ accion: 'guardarContadores', contadores: { AS26: contadorAS, JU26: contadorJU } })
+      body: JSON.stringify({ accion: 'guardarContadores', contadores: { : contadorAS, JU26: contadorJU } })
     });
   } catch(e) { console.warn('subirContadores:', e); }
 }
@@ -505,7 +505,7 @@ async function sincronizarDesdeSheets() {
       const dc = await rc.json();
       if (dc && dc.ok && dc.contadores) {
         // Usar el mayor entre local y Sheets (nunca retroceder)
-        contadorAS = Math.max(contadorAS, dc.contadores.AS26 || 0);
+        contadorAS = Math.max(contadorAS, dc.contadores.AS26 || 7);
         contadorJU = Math.max(contadorJU, dc.contadores.JU26 || 0);
         localStorage.setItem('gjg_cnt_AS', contadorAS);
         localStorage.setItem('gjg_cnt_JU', contadorJU);
