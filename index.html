@@ -716,13 +716,21 @@ async function cargarExpedientes() {
 
   if (urlTra) {
     try {
-      const r = await fetch(urlTra + '?action=leer&hoja=Expedientes', {redirect:'follow'});
+      const r = await fetch(urlTra + '?hoja=Expedientes', {redirect:'follow'});
       const d = await r.json();
-      const rawTra = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
-      if (rawTra && rawTra.length > 1) {
-        const [cab, ...rows] = rawTra;
-        rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined ? String(row[i]) : '');
+      // Tráfico devuelve array de objetos directos [{id,numero,...}]
+      let traObjs = [];
+      if (Array.isArray(d) && d.length && typeof d[0] === 'object' && !Array.isArray(d[0])) {
+        traObjs = d; // ya son objetos
+      } else {
+        const rawTra = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
+        if (rawTra && rawTra.length > 1) {
+          const [cab, ...rows] = rawTra;
+          traObjs = rows.map(row => { const o={}; cab.forEach((c,i)=>o[c]=row[i]!==undefined?String(row[i]):''); return o; });
+        }
+      }
+      if (traObjs.length) {
+        traObjs.forEach(obj => {
           const num = String(obj.numero||'').trim(); if (!num||num==='0') return;
           if (expedientes.find(e => e.num===num)) return;
           const ef = String(obj.estadoFactura||'').trim().toLowerCase();
