@@ -185,8 +185,9 @@ main { max-width: 1280px; margin: 0 auto; padding: 1.5rem; display: grid; grid-t
           <button class="tab" onclick="filtrarTipo('TR',event)">Tráfico</button>
         </div>
         <div style="display:flex;gap:0.4rem;margin-bottom:0.5rem">
-          <button id="btn-pendientes" class="btn btn-primary btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado(true)">⏳ Sin facturar</button>
-          <button id="btn-todos" class="btn btn-outline btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado(false)">📋 Todos</button>
+          <button id="btn-pendientes" class="btn btn-primary btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado('sin')">⏳ Sin facturar</button>
+          <button id="btn-listos" class="btn btn-outline btn-sm" style="flex:1;font-size:0.72rem;background:#ede9fe;color:#6d28d9;border-color:#c4b5fd" onclick="toggleFiltroFacturado('listo')">🔵 Listos</button>
+          <button id="btn-todos" class="btn btn-outline btn-sm" style="flex:1;font-size:0.72rem" onclick="toggleFiltroFacturado('todos')">📋 Todos</button>
         </div>
         <div class="field" style="margin-bottom:0.5rem">
           <input type="text" placeholder="🔍 Buscar cliente…" id="buscador" oninput="filtrarBuscar()">
@@ -212,7 +213,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 1.5rem; display: grid; grid-t
         <div class="field"><label>URL Apps Script — Tráfico</label><input type="text" id="cfg-url-tra"></div>
         <div class="field"><label>URL Apps Script — Jurídico</label><input type="text" id="cfg-url-ju"></div>
         <div class="field"><label>Dirección fiscal emisor</label><input type="text" id="cfg-dir" value="Almería"></div>
-        <div class="field"><label>Teléfono / Email gestoría</label><input type="text" id="cfg-contacto" value="trafico@gestoriajustog.es"></div>
+        <div class="field"><label>Teléfono / Email gestoría</label><input type="text" id="cfg-contacto" value="gestoriajustoguevara@gmail.com"></div>
         <button class="btn btn-primary btn-sm" onclick="guardarConfig();cargarExpedientes()">💾 Guardar y cargar</button>
         <button class="btn btn-outline btn-sm" onclick="cargarExpedientesMock()">🧪 Datos de prueba</button>
       </div>
@@ -406,9 +407,9 @@ let facturas             = JSON.parse(localStorage.getItem('gjg_facturas') || '[
 let lineaId              = 0;
 let expSeleccionado      = null;
 let expsSeleccionados    = [];
-let soloSinFacturar      = true;
+let modoFiltroFac        = 'sin'; // 'sin' | 'listo' | 'todos'
 let tipoFiltro           = 'TODOS';
-let contadorAS           = parseInt(localStorage.getItem('gjg_cnt_AS') || '7');
+let contadorAS           = parseInt(localStorage.getItem('gjg_cnt_AS') || '0');
 let contadorJU           = parseInt(localStorage.getItem('gjg_cnt_JU') || '0');
 
 const EMISOR = {
@@ -615,7 +616,7 @@ function cargarConfig() {
     }
   });
   document.getElementById('cfg-dir').value = localStorage.getItem('gjg_cfg_dir') || 'Almería';
-  document.getElementById('cfg-contacto').value = localStorage.getItem('gjg_cfg_contacto') || 'trafico@gestoriajustog.es';
+  document.getElementById('cfg-contacto').value = localStorage.getItem('gjg_cfg_contacto') || 'gestoriajustoguevara@gmail.com';
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -648,13 +649,26 @@ async function cargarExpedientes() {
 
   if (urlEsc) {
     try {
-      const r = await fetch(urlEsc + '?action=leer&hoja=CLIENTES');
+      const r = await fetch(urlEsc + '?action=leer&hoja=CLIENTES', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
+      // Escrituras devuelve {status:'ok', clis:[...]} o {success:true, datos:[[...]]}
+      let escRows = [];
+      if (d && d.clis && d.clis.length) {
+        // Formato nativo Escrituras: array de objetos directamente
+        escRows = d.clis;
+        escRows.forEach(obj => {
+          const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
+          if (expedientes.find(e => e.num===num)) return;
+          const tipo = num.startsWith('GE')?'GE':num.startsWith('AS')?'AS':num.startsWith('EX')?'EX':'GE';
+          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.gestion||'', tipo, totalExp:obj.totalExp||'', fuente:'escrituras', raw:obj });
+        });
+      } else if (d && d.datos && d.datos.length > 1) {
+        // Formato estándar con cabeceras
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
           const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
           const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
+          if (expedientes.find(e => e.num===num)) return;
           const tipo = num.startsWith('GE')?'GE':num.startsWith('AS')?'AS':num.startsWith('EX')?'EX':'GE';
           expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.gestion||'', tipo, totalExp:obj.totalExp||'', fuente:'escrituras', raw:obj });
         });
@@ -664,15 +678,16 @@ async function cargarExpedientes() {
 
   if (urlFis) {
     try {
-      const r = await fetch(urlFis + '?action=leer&hoja=FiscalExp');
+      const r = await fetch(urlFis + '?action=leer&hoja=FiscalExp', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
+      if (d && (d.datos||d.success) && (d.datos||[]).length > 1) {
         const [cab, ...rows] = d.datos;
         rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
-          const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
+          // Fiscal usa campo 'numero', no 'numExp'
+          const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
           if (expedientes.find(e => e.num===num)) return;
-          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.nie||obj.dni||'', gestion:obj.gestion||'', tipo:'AS', totalExp:obj.importeTotal||obj.honorarios||'', fuente:'fiscal', raw:obj });
+          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.asunto||obj.tipo||'FISCAL', tipo:'AS', totalExp:obj.total||obj.cobrado||'', fuente:'fiscal', raw:obj });
         });
       }
     } catch(e) { console.warn('Error Fiscal:', e); }
@@ -680,12 +695,14 @@ async function cargarExpedientes() {
 
   if (urlExt) {
     try {
-      const r = await fetch(urlExt + '?action=leer&hoja=ExtranjeriaExp');
+      const r = await fetch(urlExt + '?action=leer&hoja=ExtranjeriaExp', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
-        const [cab, ...rows] = d.datos;
+      // Extranjería puede devolver array directo [[cab],[f1],...] o {datos:[[cab],[f1],...]}
+      const rawArr = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
+      if (rawArr && rawArr.length > 1) {
+        const [cab, ...rows] = rawArr;
         rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
           const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
           if (expedientes.find(e => e.num===num)) return;
           const tipoE = num.startsWith('NA')?'NA':'EX';
@@ -699,45 +716,42 @@ async function cargarExpedientes() {
 
   if (urlTra) {
     try {
-      // Lee la hoja "Facturacion" de Tráfico (no "EXPEDIENTES")
-      // Solo carga los expedientes con estadoFacturacion = "listo"
-      const r = await fetch(urlTra + '?action=leer&hoja=Facturacion');
+      const r = await fetch(urlTra + '?action=leer&hoja=Facturacion', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
-        const [cab, ...rows] = d.datos;
-        rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
-          const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
-          if (expedientes.find(e => e.num===num)) return;
-          // Filtrar: solo mostrar los que están listos para facturar
-          const estadoFact = String(obj.estadoFacturacion||'').trim().toLowerCase();
-          if (estadoFact && estadoFact !== 'listo') return;
-          expedientes.push({
-            num,
-            cliente: obj.cliente||'',
-            dni: obj.dni||'',
-            gestion: obj.tipo||'TRÁFICO',
-            tipo: 'TR',
-            totalExp: obj.totalFactura||'',
-            fuente: 'trafico',
-            estadoFacturacion: estadoFact,
-            raw: obj
-          });
-        });
+      // Tráfico devuelve array de objetos directos [{id,numero,cliente,...}]
+      // o array de arrays [[cab],[fila1],...] o {datos:[[cab],[fila1],...]}
+      let traList = [];
+      if (Array.isArray(d) && d.length && typeof d[0] === 'object' && !Array.isArray(d[0])) {
+        // Array de objetos directos
+        traList = d;
+      } else {
+        const rawTra = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
+        if (rawTra && rawTra.length > 1) {
+          const [cab, ...rows] = rawTra;
+          traList = rows.map(row => { const o={}; cab.forEach((c,i)=>o[c]=row[i]!==undefined?String(row[i]):''); return o; });
+        }
       }
+      traList.forEach(obj => {
+        const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
+        if (expedientes.find(e => e.num===num)) return;
+        if (!obj.cliente) return;
+        expedientes.push({ num, cliente:obj.nombreComprador||obj.cliente||'', dni:obj.dniComprador||obj.dniVendedor||obj.dni||'', gestion:obj.tipo||'TRÁFICO', tipo:'TR', totalExp:obj.totalFactura||'', fuente:'trafico', raw:obj });
+      });
     } catch(e) { console.warn('Error Tráfico:', e); }
   }
 
   if (urlJu) {
     try {
-      const r = await fetch(urlJu + '?action=leer&hoja=EXPEDIENTES');
+      const r = await fetch(urlJu + '?action=leer&hoja=ExpedientesJ', {redirect:'follow'});
       const d = await r.json();
-      if (d && d.datos && d.datos.length > 1) {
-        const [cab, ...rows] = d.datos;
+      const rawJu = Array.isArray(d) ? d : (d && d.datos ? d.datos : null);
+      if (rawJu && rawJu.length > 1) {
+        const [cab, ...rows] = rawJu;
         rows.forEach(row => {
-          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?row[i]:'');
-          const num = String(obj.numExp||'').trim(); if (!num||num==='0') return;
-          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.gestion||'', tipo:'JU', totalExp:obj.honorarios||obj.importeTotal||'', fuente:'juridico', raw:obj });
+          const obj = {}; cab.forEach((c,i) => obj[c] = row[i]!==undefined?String(row[i]):'');
+          const num = String(obj.numero||obj.numExp||'').trim(); if (!num||num==='0') return;
+          if (expedientes.find(e => e.num===num)) return;
+          expedientes.push({ num, cliente:obj.cliente||obj.nombre||'', dni:obj.dni||'', gestion:obj.asunto||obj.gestion||'', tipo:'JU', totalExp:obj.cuantia||'', fuente:'juridico', raw:obj });
         });
       }
     } catch(e) { console.warn('Error Jurídico:', e); }
@@ -782,7 +796,8 @@ function renderExpedientes() {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.2rem">
         <span class="exp-num">${e.num}</span>
-        ${yaFact?'<span style="font-size:0.6rem;background:#dcfce7;color:#166534;padding:1px 5px;border-radius:10px;font-weight:600">✅ Facturado</span>':''}
+        ${yaFact?'<span style="font-size:0.6rem;background:#dcfce7;color:#166534;padding:1px 5px;border-radius:10px;font-weight:600">✅ Facturado</span>':
+          (() => { const ef=String(e.raw?.estadoFactura||e.raw?.facturacion||'').toLowerCase(); return (ef==='listo'||ef==='pte_facturar')?'<span style="font-size:0.6rem;background:#ede9fe;color:#6d28d9;padding:1px 5px;border-radius:10px;font-weight:600">🔵 Listo</span>':''; })()}
       </div>
     </div>`;
   }).join('');
@@ -800,7 +815,13 @@ function filtrarBuscar() {
   expedientesFiltrados = expedientes.filter(e => {
     const matchTipo = tipoFiltro === 'TODOS' || e.tipo === tipoFiltro;
     const matchQ = !q || e.cliente.toLowerCase().includes(q) || e.num.toLowerCase().includes(q) || (e.dni||'').toLowerCase().includes(q);
-    const matchFact = !soloSinFacturar || !expYaFacturado(e.num);
+    const efRaw = String(e.raw?.estadoFactura || e.raw?.facturacion || '').toLowerCase();
+    const esListo = efRaw === 'listo' || efRaw === 'pte_facturar';
+    const matchFact = modoFiltroFac === 'todos'
+      ? true
+      : modoFiltroFac === 'listo'
+        ? esListo && !expYaFacturado(e.num)
+        : !expYaFacturado(e.num);  // 'sin' = todos sin facturar
     return matchTipo && matchQ && matchFact;
   });
   renderExpedientes();
@@ -819,8 +840,28 @@ function toggleSeleccionMulti(event, num) {
     if (expSeleccionado) {
       document.getElementById('f-expediente').value = expSeleccionado.num;
       document.getElementById('f-cliente').value = expSeleccionado.titularFactura || expSeleccionado.cliente || '';
-      document.getElementById('f-dni').value = expSeleccionado.dniTitular || expSeleccionado.dni || '';
+      const raw = expSeleccionado.raw || {};
+      document.getElementById('f-dni').value = expSeleccionado.dniTitular || expSeleccionado.dni || raw.dni || raw.nie || raw.dniTitular || '';
+      document.getElementById('f-tel').value = raw.telefono || raw.tel || raw.telCliente || '';
+      // Dirección: intentar componer desde campos disponibles
+      const dir = raw.dir || raw.direccion || raw.domicilio || (raw.tipoVia ? [raw.tipoVia||'', raw.nombreVia||'', raw.numeroCalle||'', raw.cp||'', raw.municipio||''].filter(Boolean).join(' ').trim() : '');
+      document.getElementById('f-dir-cli').value = dir;
       actualizarSerie();
+      // Si no hay DNI, buscar automáticamente en MAESTRO por nombre
+      const dniActual = document.getElementById('f-dni').value.trim();
+      if (!dniActual && expSeleccionado.cliente) {
+        const st = document.getElementById('mst-fac');
+        if (st) st.textContent = '🔍 Buscando en Maestro...';
+        buscarEnMaestroPorNombre(expSeleccionado.cliente).then(cli => {
+          if (!cli) { if(st) st.textContent = ''; return; }
+          const setF = (id, val) => { const el=document.getElementById(id); if(el && val) el.value=val; };
+          setF('f-dni', cli.DNI_NIE || '');
+          setF('f-tel', cli.Telefono1 || '');
+          const dirM = [cli.Tipo_Via, cli.Nombre_Via, cli.Numero, cli.CP, cli.Municipio].filter(v=>v&&String(v).trim()&&String(v)!=='None').join(' ');
+          setF('f-dir-cli', dirM);
+          if(st) st.textContent = '✅ Datos cargados desde Maestro';
+        });
+      }
     }
   }
   renderExpedientes();
@@ -832,7 +873,11 @@ function cargarMulti() {
   const primero = expedientes.find(e => e.num === expsSeleccionados[0]);
   if (primero) {
     document.getElementById('f-cliente').value = primero.titularFactura || primero.cliente || '';
-    document.getElementById('f-dni').value = primero.dniTitular || primero.dni || '';
+    const rawP = primero.raw || {};
+    document.getElementById('f-dni').value = primero.dniTitular || primero.dni || rawP.dni || rawP.nie || rawP.dniTitular || '';
+    document.getElementById('f-tel').value = rawP.telefono || rawP.tel || rawP.telCliente || '';
+    const dirP = rawP.dir || rawP.direccion || rawP.domicilio || (rawP.tipoVia ? [rawP.tipoVia||'', rawP.nombreVia||'', rawP.numeroCalle||'', rawP.cp||'', rawP.municipio||''].filter(Boolean).join(' ').trim() : '');
+    document.getElementById('f-dir-cli').value = dirP;
     expSeleccionado = primero; actualizarSerie();
   }
   document.getElementById('f-expediente').value = expsSeleccionados.join(', ');
@@ -868,12 +913,25 @@ function expYaFacturado(num) {
   });
 }
 
-function toggleFiltroFacturado(soloSin) {
-  soloSinFacturar = soloSin;
-  document.getElementById('btn-pendientes').className = (soloSin ? 'btn btn-primary' : 'btn btn-outline') + ' btn-sm';
+function toggleFiltroFacturado(modo) {
+  modoFiltroFac = modo;
+  // Resetear todos
+  document.getElementById('btn-pendientes').className = 'btn btn-outline btn-sm';
   document.getElementById('btn-pendientes').style.cssText = 'flex:1;font-size:0.72rem';
-  document.getElementById('btn-todos').className = (soloSin ? 'btn btn-outline' : 'btn btn-primary') + ' btn-sm';
+  const btnL = document.getElementById('btn-listos');
+  if (btnL) { btnL.className = 'btn btn-outline btn-sm'; btnL.style.cssText = 'flex:1;font-size:0.72rem;background:#ede9fe;color:#6d28d9;border-color:#c4b5fd'; }
+  document.getElementById('btn-todos').className = 'btn btn-outline btn-sm';
   document.getElementById('btn-todos').style.cssText = 'flex:1;font-size:0.72rem';
+  // Activar el seleccionado
+  if (modo === 'sin') {
+    document.getElementById('btn-pendientes').className = 'btn btn-primary btn-sm';
+    document.getElementById('btn-pendientes').style.cssText = 'flex:1;font-size:0.72rem';
+  } else if (modo === 'listo') {
+    if (btnL) { btnL.style.cssText = 'flex:1;font-size:0.72rem;background:#7c3aed;color:white;border-color:#7c3aed'; }
+  } else {
+    document.getElementById('btn-todos').className = 'btn btn-primary btn-sm';
+    document.getElementById('btn-todos').style.cssText = 'flex:1;font-size:0.72rem';
+  }
   filtrarBuscar();
 }
 
@@ -908,17 +966,25 @@ function extraerLineasExpediente(exp) {
     if (d.traduccion === 'SI') lineas.push({ desc: 'Traducción jurada de documentos', precio: 0, iva: 21 });
     if (total > 0 && honorarios <= 0) addL('Honorarios gestoría · ' + gestion, total);
   } else if (exp.tipo === 'AS') {
-    addL('Honorarios asesoría fiscal · ' + gestion, d.honorarios || d.importeTotal || d.totalExp);
-    addS('Tasas / suplidos', d.tasas || d.suplidos || d.totalTasas);
+    // Fiscal: campos cobrado/total/base según lo que venga
+    // Fiscal: el campo 'total' es el total de la factura incluyendo IVA
+    // El campo 'cobrado' es lo que han pagado, 'base' es la base imponible
+    const honAS = parseFloat(String(d.base||d.honorarios||d.cobrado||d.total||d.importeTotal||0).replace(',','.').replace(/[^0-9.-]/g,''))||0;
+    const supAS = parseFloat(String(d.tasas||d.suplidos||d.totalTasas||0).replace(',','.'))||0;
+    if (honAS > 0) addL('Honorarios asesoría fiscal · ' + (gestion||d.asunto||d.tipo||''), honAS);
+    else addL('Honorarios asesoría fiscal · ' + (gestion||d.asunto||d.tipo||''), 0);
+    if (supAS > 0) addS('Tasas / suplidos', supAS);
   } else if (exp.tipo === 'TR') {
-    const honTR  = parseFloat(String(d.honorarios||0).replace(',','.'))||0;
-    const tasaTR = parseFloat(String(d.tasaTrafico||0).replace(',','.'))||0;
-    const impTR  = parseFloat(String(d.impuesto||0).replace(',','.'))||0;
-    if (honTR  > 0) addL('Honorarios gestoría · ' + (d.tipo || gestion || 'Tráfico'), honTR);
+    const honTR = parseFloat(String(d.honorarios).replace(',','.'))||0;
+    const tasaTR = parseFloat(String(d.tasaTrafico).replace(',','.'))||0;
+    const impTR  = parseFloat(String(d.impuesto).replace(',','.'))||0;
+    if (honTR  > 0) addL('Honorarios gestoría · ' + (gestion || 'Tráfico'), honTR);
     if (tasaTR > 0) addS('Tasa de tráfico (suplido)', tasaTR);
     if (impTR  > 0) addS('ITP · Impuesto sobre Transmisiones Patrimoniales (suplido)', impTR);
   } else if (exp.tipo === 'JU') {
-    addL('Honorarios servicios jurídicos · ' + gestion, d.honorarios || d.importeTotal || d.totalExp);
+    const honJU = parseFloat(String(d.honorarios||d.cuantia||d.importeTotal||d.totalExp||0).replace(',','.'))||0;
+    if (honJU > 0) addL('Honorarios servicios jurídicos · ' + gestion, honJU);
+    else addL('Honorarios servicios jurídicos · ' + (gestion||d.asunto||'Jurídico'), 0);
     addS('Suplidos', d.suplidos || d.tasas);
   }
   return lineas.filter(l => l.precio > 0 || l.desc);
@@ -1040,7 +1106,14 @@ async function guardarFacturaFinal() {
     cliente, dni: document.getElementById('f-dni').value,
     tel: document.getElementById('f-tel').value, dir: document.getElementById('f-dir-cli').value,
     pago: document.getElementById('f-pago').value, venc: document.getElementById('f-venc').value,
-    obs: document.getElementById('f-obs').value, lineas, base, cuotaIVA, total, estado: 'emitida'
+    obs: document.getElementById('f-obs').value, lineas, base, cuotaIVA, total, estado: 'emitida',
+    pagosExp: (() => {
+      const expNum = document.getElementById('f-expediente').value;
+      const exp = expedientes.find(e => e.num === expNum);
+      if (!exp || !exp.raw) return [];
+      let p = exp.raw.pagos_json || exp.raw.pagos || '[]';
+      try { return typeof p === 'string' ? JSON.parse(p) : (Array.isArray(p) ? p : []); } catch(e) { return []; }
+    })()
   };
   // Eliminar proforma previa si la hay
   const idxPro = facturas.findIndex(f => f.estado === 'proforma' && f.expediente === fact.expediente);
@@ -1056,6 +1129,8 @@ async function guardarFacturaFinal() {
   // Subir a Sheets
   await subirFacturaASheets(fact);
   await subirContadoresASheets();
+  // Actualizar estadoFactura = 'facturado' en las apps de origen
+  await actualizarEstadoFacturadoEnApps(fact.expediente);
 }
 
 function editarProforma(id) {
@@ -1080,7 +1155,14 @@ function editarProforma(id) {
 }
 
 function estaFacturaPagada(f) {
-  if (!f || !f.expediente) return false;
+  if (!f) return false;
+  // Primero usa pagos guardados en la factura (fiables aunque el expediente ya no esté en lista)
+  if (Array.isArray(f.pagosExp) && f.pagosExp.length) {
+    const totalPagado = f.pagosExp.reduce((sum, p) => sum + (parseFloat(String(p.importe||0).replace(',','.'))||0), 0);
+    return round2(totalPagado) >= round2(f.total);
+  }
+  // Fallback: buscar en expediente vivo (facturas antiguas sin pagosExp)
+  if (!f.expediente) return false;
   const exp = expedientes.find(e => e.num === f.expediente);
   if (!exp || !exp.raw) return false;
   let pagosJson = exp.raw.pagos_json || exp.raw.pagos || '[]';
@@ -1101,23 +1183,34 @@ function renderFacturas() {
   }).sort((a, b) => b.id - a.id);
   document.getElementById('badge-facturas').textContent = facturas.length;
   if (!filtradas.length) { list.innerHTML = '<div class="empty"><div class="icon">🧾</div>No hay facturas aún</div>'; return; }
-  list.innerHTML = filtradas.map(f => `
-    <div class="fact-row">
-      <span class="fact-num">${f.numero}</span>
+  list.innerHTML = filtradas.map(f => {
+    const esProforma = f.estado === 'proforma';
+    const esAnulada  = f.estado === 'anulada';
+    const rowStyle   = esProforma
+      ? 'background:#fffbeb;border-left:4px solid #f59e0b;'
+      : esAnulada
+        ? 'background:#fef2f2;border-left:4px solid #fca5a5;opacity:0.7;'
+        : 'border-left:4px solid #22c55e;';
+    return `
+    <div class="fact-row" style="${rowStyle}">
+      <span class="fact-num" style="${esProforma?'color:#b45309;':''}${esAnulada?'text-decoration:line-through;color:#aaa;':''}">${f.numero}</span>
       <span style="font-size:0.72rem;color:var(--gray2)">${f.fecha||''}</span>
       <span class="fact-cliente">${f.cliente}</span>
       <span style="font-size:0.72rem;color:var(--gray2);flex-shrink:0">${f.expediente||''}</span>
       <span class="fact-importe">${fmt(f.total)}</span>
-      <span class="fact-estado estado-${f.estado}">${f.estado}</span>
-      ${f.estado==='proforma'
-        ? `<button class="btn btn-sm" style="background:#fef9c3;color:#854d0e;border:1px solid #d97706" onclick="editarProforma(${f.id})">✏️ Emitir</button>`
-        : estaFacturaPagada(f)
-          ? '<span class="fact-estado estado-pagada">✅ Pagada</span>'
-          : '<span class="fact-estado estado-pendiente">🔴 Pendiente</span>'
+      ${esProforma
+        ? '<span style="font-size:0.7rem;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:10px;font-weight:700;border:1px solid #fcd34d;">📋 PROFORMA</span>'
+        : esAnulada
+          ? '<span style="font-size:0.7rem;background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:10px;font-weight:700;">✕ ANULADA</span>'
+          : estaFacturaPagada(f)
+            ? '<span style="font-size:0.7rem;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:10px;font-weight:700;">✅ PAGADA</span>'
+            : '<span style="font-size:0.7rem;background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:10px;font-weight:700;">🔴 PENDIENTE</span>'
       }
+      ${esProforma ? `<button class="btn btn-sm" style="background:#f59e0b;color:white;border:none;font-weight:700;" onclick="editarProforma(${f.id})">✏️ Emitir factura</button>` : ''}
       <button class="btn btn-outline btn-sm" onclick="verFactura(${f.id})">👁️</button>
-      ${f.estado !== 'proforma' ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b" onclick="anularFactura(${f.id})">✕ Anular</button>` : ''}
-    </div>`).join('');
+      ${!esProforma && !esAnulada ? `<button class="btn btn-sm" style="background:#fee2e2;color:#991b1b" onclick="anularFactura(${f.id})">✕ Anular</button>` : ''}
+    </div>`;
+  }).join('');
 }
 
 function verFactura(id) { const f = facturas.find(x => x.id === id); if (f) mostrarPreview(f); }
@@ -1166,7 +1259,7 @@ function htmlFactura(f) {
         <div class="fact-serie">${f.numero||'—'}</div>
         <p>${esProforma?'<span style="color:#d97706;font-weight:700">FACTURA PROFORMA</span>':'FACTURA'}</p>
         <p>Fecha: <strong>${fecFmt}</strong></p>
-        ${f.expediente?`<p>Exp: <strong>${f.expediente}</strong></p>`:''}
+        ${esProforma && f.expediente?`<p>Exp: <strong>${f.expediente}</strong></p>`:''}
       </div>
     </div>
     <div class="fact-partes">
@@ -1178,9 +1271,9 @@ function htmlFactura(f) {
       <tbody>${lineasHtml}</tbody>
     </table></div>
     <div class="fact-totales-box"><div class="fact-totales-inner">
-      <div class="fact-tot-row"><span>Base imponible</span><span>${f.base.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
-      <div class="fact-tot-row"><span>IVA</span><span>${f.cuotaIVA.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
-      <div class="fact-tot-row grand"><span>TOTAL</span><span>${f.total.toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
+      <div class="fact-tot-row"><span>Base imponible</span><span>${(f.base||0).toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
+      <div class="fact-tot-row"><span>IVA</span><span>${(f.cuotaIVA||0).toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
+      <div class="fact-tot-row grand"><span>TOTAL</span><span>${(f.total||0).toLocaleString('es-ES',{minimumFractionDigits:2})} €</span></div>
     </div></div>
     ${f.pago?`<p style="margin-top:1rem;font-size:0.78rem;color:#555"><strong>Forma de pago:</strong> ${f.pago}</p>`:''}
     ${f.obs?`<p style="margin-top:0.5rem;font-size:0.78rem;color:#555"><em>${f.obs}</em></p>`:''}
@@ -1197,11 +1290,23 @@ function cerrarPreview() { document.getElementById('modal-preview').style.displa
 function imprimirFactura() {
   const contenido = document.getElementById('preview-content').innerHTML;
   if (!contenido) { toast('No hay factura para imprimir', true); return; }
-  const css = document.querySelector('style').textContent;
-  const ventana = window.open('', '_blank', 'width=820,height=1000');
-  ventana.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:sans-serif;padding:20px;background:white;}' + css + '@media print{body{padding:0;}.factura-paper{box-shadow:none;}}</style></head><body>' + contenido + '</body></html>');
-  ventana.document.close();
-  setTimeout(() => { try { ventana.focus(); ventana.print(); } catch(e) {} }, 900);
+  document.getElementById('print-inject')?.remove();
+  document.getElementById('print-area')?.remove();
+  document.body.insertAdjacentHTML('beforeend',
+    `<style id="print-inject">
+       @media print {
+         body > *:not(#print-area) { display: none !important; }
+         #print-area { display: block !important; position:fixed; top:0; left:0; width:100%; background:white; }
+         .factura-paper { box-shadow: none !important; max-width:100% !important; padding:1.5rem 2rem !important; }
+       }
+     </style>
+     <div id="print-area">${contenido}</div>`
+  );
+  window.print();
+  setTimeout(() => {
+    document.getElementById('print-inject')?.remove();
+    document.getElementById('print-area')?.remove();
+  }, 1500);
 }
 
 function limpiarFormulario() {
@@ -1377,6 +1482,16 @@ async function buscarEnMaestro(dni) {
   return null;
 }
 
+async function buscarEnMaestroPorNombre(nombre) {
+  if (!URL_MAESTRO || !nombre || nombre.length < 3) return null;
+  try {
+    const r = await fetch(URL_MAESTRO + '?action=buscar&nombre=' + encodeURIComponent(nombre.trim()));
+    const d = await r.json();
+    if (d && d.encontrado) return d.cliente;
+  } catch(e) {}
+  return null;
+}
+
 async function rellenarDesdeMaestroFAC() {
   const dni = (document.getElementById('f-dni')?.value || '').trim();
   const st = document.getElementById('mst-fac');
@@ -1400,6 +1515,59 @@ function toast(msg, error = false) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.style.background = error ? '#c0392b' : 'var(--navy)'; t.style.display = 'flex';
   clearTimeout(toastTimer); toastTimer = setTimeout(() => t.style.display = 'none', 3500);
+}
+
+// ═══ ACTUALIZAR ESTADO FACTURADO EN APPS DE ORIGEN ══════════
+// Se llama al emitir factura. Recorre los expedientes de la factura
+// y manda POST a la app correspondiente para marcar estadoFactura='facturado'
+async function actualizarEstadoFacturadoEnApps(expedienteField) {
+  if (!expedienteField) return;
+  const nums = expedienteField.split(',').map(s => s.trim()).filter(Boolean);
+  if (!nums.length) return;
+
+  const urlEsc = document.getElementById('cfg-url-esc')?.value.trim();
+  const urlFis = document.getElementById('cfg-url-fis')?.value.trim();
+  const urlExt = document.getElementById('cfg-url-ext')?.value.trim();
+  const urlTra = document.getElementById('cfg-url-tra')?.value.trim();
+  const urlJu  = document.getElementById('cfg-url-ju')?.value.trim();
+
+  // Mapa de prefijo → {url, hoja, campo}
+  const mapa = [
+    { prefijos: ['GE'], url: urlEsc, hoja: 'CLIENTES',      campo: 'estadoFactura' },
+    { prefijos: ['AS'], url: urlFis, hoja: 'FiscalExp',     campo: 'facturacion'   },
+    { prefijos: ['EX','NA'], url: urlExt, hoja: 'ExtranjeriaExp', campo: 'estadoFactura' },
+    { prefijos: ['F'],  url: urlTra, hoja: 'EXPEDIENTES',   campo: 'estadoFactura' },
+    { prefijos: ['JU'], url: urlJu,  hoja: 'ExpedientesJ',  campo: 'estadoFactura' },
+  ];
+
+  for (const num of nums) {
+    // Buscar el exp en memoria para saber su fuente
+    const exp = expedientes.find(e => e.num === num);
+    if (!exp) continue;
+
+    const entrada = mapa.find(m => m.prefijos.some(p => num.startsWith(p)));
+    if (!entrada || !entrada.url) continue;
+
+    try {
+      await fetch(entrada.url, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({
+          action: 'actualizarCampo',
+          hoja: entrada.hoja,
+          numExp: num,
+          campo: entrada.campo,
+          valor: entrada.campo === 'facturacion' ? 'facturado' : 'facturado'
+        })
+      });
+      console.log('✅ Marcado como facturado:', num);
+    } catch(e) {
+      console.warn('Error actualizando', num, e);
+    }
+  }
+
+  // Refrescar la lista de expedientes para reflejar el nuevo estado
+  setTimeout(() => cargarExpedientes(), 1500);
 }
 </script>
 </body>
