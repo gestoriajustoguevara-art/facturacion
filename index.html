@@ -1001,28 +1001,21 @@ function renderDashboard(){
 function exportarCSV(){
   if(!facturas.length){toast('No hay facturas para exportar',true);return;}
   const cab=['Nº Factura','Serie','Fecha','Expediente','Cliente','NIF','Pago','Base','IVA','Retención','Total','Estado'];
-  const rows=facturas.map(f=>[f.numero,f.serie,f.fecha,f.expediente||'',f.cliente,f.dni||'',f.pago||'',f.base,f.cuotaIVA,f.retencion||0,f.total,f.estado]);
-  // Generar Excel (.xlsx) usando formato XML de hoja de cálculo
-  let xml='<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>';
-  xml+='<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">';
-  xml+='<Styles><Style ss:ID="cab"><Font ss:Bold="1" ss:Size="11"/><Interior ss:Color="#0B1829" ss:Pattern="Solid"/><Font ss:Color="#FFFFFF" ss:Bold="1"/></Style>';
-  xml+='<Style ss:ID="num"><NumberFormat ss:Format="#,##0.00"/></Style>';
-  xml+='<Style ss:ID="fecha"><NumberFormat ss:Format="dd/mm/yyyy"/></Style></Styles>';
-  xml+='<Worksheet ss:Name="Facturas"><Table>';
-  // Cabeceras
-  xml+='<Row ss:StyleID="cab">';cab.forEach(c=>{xml+='<Cell><Data ss:Type="String">'+c+'</Data></Cell>';});xml+='</Row>';
-  // Datos
+  const rows=facturas.map(f=>[f.numero,f.serie,f.fecha?f.fecha.split('-').reverse().join('/'):f.fecha,f.expediente||'',f.cliente,f.dni||'',f.pago||'',f.base,f.cuotaIVA,f.retencion||0,f.total,f.estado]);
+  // Generar HTML table que Excel 2013 abre sin problemas
+  let html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Facturas</x:Name></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>';
+  html+='<table border="1" cellpadding="4" style="border-collapse:collapse">';
+  html+='<tr style="background:#0B1829;color:white;font-weight:bold">';cab.forEach(c=>{html+='<td>'+c+'</td>';});html+='</tr>';
   rows.forEach(r=>{
-    xml+='<Row>';
+    html+='<tr>';
     r.forEach((v,i)=>{
-      if(i>=7&&i<=10){xml+='<Cell ss:StyleID="num"><Data ss:Type="Number">'+(parseFloat(v)||0)+'</Data></Cell>';}
-      else if(i===2){xml+='<Cell ss:StyleID="fecha"><Data ss:Type="String">'+String(v).split('-').reverse().join('/')+'</Data></Cell>';}
-      else{xml+='<Cell><Data ss:Type="String">'+String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</Data></Cell>';}
+      if(i>=7&&i<=10)html+='<td style="text-align:right">'+Number(parseFloat(v)||0).toLocaleString('es-ES',{minimumFractionDigits:2})+'</td>';
+      else html+='<td>'+String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</td>';
     });
-    xml+='</Row>';
+    html+='</tr>';
   });
-  xml+='</Table></Worksheet></Workbook>';
-  descargar('facturas_gjg.xls',xml,'application/vnd.ms-excel'); toast('📥 Excel descargado');
+  html+='</table></body></html>';
+  descargar('facturas_gjg.xls',html,'application/vnd.ms-excel'); toast('📥 Excel descargado');
 }
 
 function getFiltradas(){
