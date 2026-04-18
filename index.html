@@ -287,7 +287,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 1.5rem; display: grid; grid-t
           <option value="JU26">JU26 (Jurídico)</option>
           <option value="PRO">Proformas</option>
         </select>
-        <button class="btn btn-gold btn-sm" onclick="exportarCSV()">📥 CSV</button>
+        <button class="btn btn-gold btn-sm" onclick="exportarCSV()">📥 Excel</button>
         <button class="btn btn-outline btn-sm" onclick="refrescarPagos()">🔄 Refrescar pagos</button>
         <button class="btn btn-primary btn-sm" onclick="sincronizarDesdeSheets()">☁️ Cargar desde Sheets</button>
       </div>
@@ -676,11 +676,19 @@ function actualizarTotales(){
   document.getElementById('t-base').textContent=fmt(base);
   document.getElementById('t-iva').textContent=fmt(cuotaIVA);
 
-  // Retención IRPF 15%
+  // Retención IRPF 15% (solo sobre honorarios, NO suplidos)
   const esRetencion=document.getElementById('f-retencion')?.checked;
   let retencion=0;
   if(esRetencion){
-    retencion=round2(base*0.15);
+    let baseHonorarios=0;
+    document.querySelectorAll('#lineas-body tr').forEach(tr=>{
+      const inputs=tr.querySelectorAll('input'),select=tr.querySelector('select');
+      if(!inputs[1]||!inputs[2])return;
+      const qty=parseFloat(inputs[1].value)||0,precio=parseFloat(inputs[2].value)||0;
+      const ivaRate=select?parseFloat(select.value):21;
+      if(ivaRate>0)baseHonorarios+=round2(qty*precio);
+    });
+    retencion=round2(baseHonorarios*0.15);
     document.getElementById('t-retencion').textContent='– '+fmt(retencion);
     document.getElementById('row-retencion').style.display='flex';
   } else {
@@ -705,7 +713,9 @@ function calcTotalesLineas(lineas){
   let base=0, cuotaIVA=0;
   lineas.forEach(l=>{const sub=round2(l.qty*l.precio);base+=sub;cuotaIVA+=round2(sub*l.iva/100);});
   const esRetencion=document.getElementById('f-retencion')?.checked;
-  const retencion=esRetencion?round2(base*0.15):0;
+  let baseHonorarios=0;
+  lineas.forEach(l=>{if(l.iva>0)baseHonorarios+=round2(l.qty*l.precio);});
+  const retencion=esRetencion?round2(baseHonorarios*0.15):0;
   return{base:round2(base),cuotaIVA:round2(cuotaIVA),retencion,total:round2(base+cuotaIVA-retencion)};
 }
 
@@ -868,7 +878,8 @@ function previsualizarFactura(){
   let base=0,cuotaIVA=0;
   lineas.forEach(l=>{const sub=round2(l.qty*l.precio);base+=sub;cuotaIVA+=round2(sub*l.iva/100);});
   const esRet=document.getElementById('f-retencion')?.checked;
-  const retencion=esRet?round2(base*0.15):0;
+  let baseHon=0;lineas.forEach(l=>{if(l.iva>0)baseHon+=round2(l.qty*l.precio);});
+  const retencion=esRet?round2(baseHon*0.15):0;
   mostrarPreview({numero:document.getElementById('f-numero').value,fecha:document.getElementById('f-fecha').value,expediente:document.getElementById('f-expediente').value,cliente,dni:document.getElementById('f-dni').value,tel:document.getElementById('f-tel').value,dir:document.getElementById('f-dir-cli').value,pago:document.getElementById('f-pago').value,obs:document.getElementById('f-obs').value,retencion,conRetencion:esRet,lineas,base:round2(base),cuotaIVA:round2(cuotaIVA),total:round2(base+cuotaIVA-retencion)});
 }
 
@@ -991,8 +1002,27 @@ function exportarCSV(){
   if(!facturas.length){toast('No hay facturas para exportar',true);return;}
   const cab=['Nº Factura','Serie','Fecha','Expediente','Cliente','NIF','Pago','Base','IVA','Retención','Total','Estado'];
   const rows=facturas.map(f=>[f.numero,f.serie,f.fecha,f.expediente||'',f.cliente,f.dni||'',f.pago||'',f.base,f.cuotaIVA,f.retencion||0,f.total,f.estado]);
-  const csv=[cab,...rows].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  descargar('facturas_gjg.csv',csv,'text/csv'); toast('📥 CSV descargado');
+  // Generar Excel (.xlsx) usando formato XML de hoja de cálculo
+  let xml='<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>';
+  xml+='<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">';
+  xml+='<Styles><Style ss:ID="cab"><Font ss:Bold="1" ss:Size="11"/><Interior ss:Color="#0B1829" ss:Pattern="Solid"/><Font ss:Color="#FFFFFF" ss:Bold="1"/></Style>';
+  xml+='<Style ss:ID="num"><NumberFormat ss:Format="#,##0.00"/></Style>';
+  xml+='<Style ss:ID="fecha"><NumberFormat ss:Format="dd/mm/yyyy"/></Style></Styles>';
+  xml+='<Worksheet ss:Name="Facturas"><Table>';
+  // Cabeceras
+  xml+='<Row ss:StyleID="cab">';cab.forEach(c=>{xml+='<Cell><Data ss:Type="String">'+c+'</Data></Cell>';});xml+='</Row>';
+  // Datos
+  rows.forEach(r=>{
+    xml+='<Row>';
+    r.forEach((v,i)=>{
+      if(i>=7&&i<=10){xml+='<Cell ss:StyleID="num"><Data ss:Type="Number">'+(parseFloat(v)||0)+'</Data></Cell>';}
+      else if(i===2){xml+='<Cell ss:StyleID="fecha"><Data ss:Type="String">'+String(v).split('-').reverse().join('/')+'</Data></Cell>';}
+      else{xml+='<Cell><Data ss:Type="String">'+String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</Data></Cell>';}
+    });
+    xml+='</Row>';
+  });
+  xml+='</Table></Worksheet></Workbook>';
+  descargar('facturas_gjg.xls',xml,'application/vnd.ms-excel'); toast('📥 Excel descargado');
 }
 
 function getFiltradas(){
