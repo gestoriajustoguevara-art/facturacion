@@ -106,7 +106,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 1.5rem; display: grid; grid-t
 .empty { text-align: center; padding: 2rem 1rem; color: var(--gray2); font-size: 0.82rem; }
 .empty .icon { font-size: 2rem; margin-bottom: 0.5rem; }
 ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--gray); border-radius: 10px; }
-@media print { body > *:not(#print-area) { display: none !important; } #print-area { display: block !important; } .factura-paper { box-shadow: none; } }
+@media print { body > *:not(#print-area) { display: none !important; } #print-area { display: block !important; position: static; } .factura-paper { box-shadow: none; page-break-inside: auto; } .fact-lineas tr { page-break-inside: avoid; } .fact-totales-box, .fact-pie { page-break-inside: avoid; } .fact-header { page-break-after: avoid; } @page { margin: 1.5cm; } }
 .nav-pills { display: flex; gap: 0.5rem; }
 .nav-pill { padding: 0.35rem 0.9rem; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.3); background: transparent; color: rgba(255,255,255,0.7); font-size: 0.75rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
 .nav-pill.active { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 600; }
@@ -930,7 +930,7 @@ function imprimirFactura(){
   const contenido=document.getElementById('preview-content').innerHTML;
   if(!contenido){toast('No hay factura para imprimir',true);return;}
   document.getElementById('print-inject')?.remove(); document.getElementById('print-area')?.remove();
-  document.body.insertAdjacentHTML('beforeend',`<style id="print-inject">@media print{body>*:not(#print-area){display:none!important;}#print-area{display:block!important;position:fixed;top:0;left:0;width:100%;background:white;}.factura-paper{box-shadow:none!important;max-width:100%!important;padding:1.5rem 2rem!important;}}</style><div id="print-area">${contenido}</div>`);
+  document.body.insertAdjacentHTML('beforeend',`<style id="print-inject">@media print{body>*:not(#print-area){display:none!important;}#print-area{display:block!important;position:static;width:100%;background:white;}.factura-paper{box-shadow:none!important;max-width:100%!important;padding:1.5rem 2rem!important;page-break-inside:auto;}.fact-lineas tr{page-break-inside:avoid;}.fact-header{page-break-after:avoid;}.fact-totales-box{page-break-inside:avoid;}.fact-pie{page-break-inside:avoid;}@page{margin:1.5cm;}}</style><div id="print-area">${contenido}</div>`);
   window.print();
   setTimeout(()=>{document.getElementById('print-inject')?.remove();document.getElementById('print-area')?.remove();},1500);
 }
